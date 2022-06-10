@@ -130,17 +130,26 @@ class InterviewController extends Controller
      */
     public function edit($interview)
     {
-//dd($request->interviews);
-//dd(Interview::get());
-         //  $interview = Interview::findOrFail($id);
+        //dd($request->interviews);
+        //dd(Interview::get());
+        // $interview = Interview::findOrFail($id);
+        if (Auth::User()->role == 'recruiter'){
 
-
-           $interviews = DB::table('interviews')
+           $interview = DB::table('interviews')
            ->join('applications','interviews.application_id', '=', 'applications.id')
            ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
            ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time', 'interviews.confirmation as confirmation', 'interviews.id as id', 'applications.id as app_id')
-           ->where('vacancies.id', '=', $interview)->get();
+           ->where('vacancies.id', '=', $interview)->first();
+        }
+        else if (Auth::User()->role == 'applicant'){
+            $interview = DB::table('interviews')
+            ->join('applications','interviews.application_id', '=', 'applications.id')
+            ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
+            ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time', 'interviews.confirmation as confirmation', 'interviews.id as id')
+            ->where('vacancies.id', '=', $interview)->get();
+                    //dd(Interview::get());
 
+        }
             return view('interviews.edit', compact('interview'));
     
     }
@@ -155,6 +164,8 @@ class InterviewController extends Controller
     public function update(Request $request, Interview $interview)
     {
         if (Auth::User()->role == 'recruiter'){
+            
+        $interview->update($request->all());
 
         $request->validate([
             'date'=>'required',
@@ -169,15 +180,17 @@ class InterviewController extends Controller
 
         ]);
 
-        //$interview->update($request->all());
     }
     else if (Auth::User()->role == 'applicant'){
+
+        $interview->update($request->all());
+
         $request->validate([
             'confirmation'=>'required',
         
         ]);
         DB::table('interviews')
-        ->where('id',$interview)->update([
+        ->where('id',$interview->id)->update([
             'confirmation' => $request->confirmation,
 
         ]);

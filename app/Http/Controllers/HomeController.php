@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Vacancy;
+use App\Application;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -23,8 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $vacancies = Vacancy::count();
+        $applications = Application::count();
 
-        return view('home');
+        return view('home', compact('applications', 'vacancies'));
     }
 
     public function contact()

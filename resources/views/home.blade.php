@@ -41,7 +41,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Job Applications</span>
                 <span class="info-box-number">
-                
+                {{$applications}}
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -55,7 +55,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Available Vacancies</span>
-                <span class="info-box-number">4</span>
+                <span class="info-box-number">   {{$vacancies}} </span>
               </div>
               <!-- /.info-box-content -->
             </div>

@@ -37,6 +37,7 @@ Route::get('/about', 'HomeController@about')->name('about');
 //delete
 //Route::delete('/branches/{branch}', 'BranchController@delete')->name('branches.delete');
 
+
 Route::resource('users', 'UserController');
 Route::resource('branches', 'BranchController');
 Route::resource('recruiters', 'RecruiterController');
@@ -48,4 +49,3 @@ Route::resource('applications', 'ApplicationController');
 Route::resource('interviews', 'InterviewController');
 Route::get('/applications/view/{id}', 'ApplicationController@view')->name('applications.view');
 Route::get('/vacancies/search', 'VacancyController@search')->name('vacancies.search');
-

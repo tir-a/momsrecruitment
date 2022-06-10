@@ -26,7 +26,6 @@
 <form action="{{ route('interviews.update',$interview->id) }}" method="POST" onsubmit="return submitForm(this);">
     @csrf
     @method('PUT')
-    @foreach ($interview as $interviews)
 
      <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-12">
@@ -53,7 +52,6 @@
                 <a class="btn btn-primary" href="{{ route('interviews.index') }}"> Back</a>
         </div>
     </div>
-    @endforeach
 </form>
 
 </div></div>
@@ -126,7 +124,6 @@ function isNumberKey(evt){
 <form action="{{ route('interviews.update',$interview->id) }}" method="POST">
         @csrf
         @method('PUT')
-        @foreach ($interview as $interviews)
 
 <div class="row">
 <div class="col-lg-6 col-md-6">
@@ -165,8 +162,7 @@ function isNumberKey(evt){
                 <a><button type="submit" class="btn btn-success">Submit</button></a>
                 <a class="btn btn-primary" href="{{ route('interviews.index') }}"> Back</a>
       </div>
-</form>@endforeach
-</div>
+</form>
 </div>
 </section>
 

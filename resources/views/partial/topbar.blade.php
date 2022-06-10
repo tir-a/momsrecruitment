@@ -184,7 +184,7 @@ Moms Postnatal Care
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake; brand-image img-rounded elevation-3" src="{{ asset('admin/dist/img/moms.jpeg') }}" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -203,14 +203,14 @@ Moms Postnatal Care
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown " aria-labelledby="UserDropdown">
                 <a class="dropdown-item"> 
                  <a href= "{{route('users.show', ['user' => auth()->user()->id])}}" class="nav-link">
-                  <i class="nav-icon fas fa-user"></i>My Profile 
+                  <i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;&nbsp;My Profile 
                  </a>
                 </a>
                 <a class="dropdown-item">
                 <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="nav-link">
-                  <i class="nav-icon fas fa-sign-out-alt"></i> Logout 
+                  <i class="nav-icon fas fa-sign-out-alt"></i>&nbsp;&nbsp;&nbsp;Logout 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                 </form>

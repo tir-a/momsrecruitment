@@ -200,7 +200,9 @@ class ApplicationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Application $application)
-    { //dd($application);
+    { 
+       // dd($request->application);
+
         $request->validate([
             'app_status'=>'required',
 
@@ -210,11 +212,8 @@ class ApplicationController extends Controller
         ->select('id')
         ->where('user_id', '=', Auth::User()->id)->first()->id;
 
-        //dd($application);
-        
-     
         DB::table('applications')
-        ->where('id',$application)->update([
+        ->where('id',$application->id)->update([
             'app_status' => $request->app_status,
         ]);
 
@@ -244,11 +243,16 @@ class ApplicationController extends Controller
         ->select('educations.id as id', 'applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number')
         ->where('users.id', '=', Auth::User()->id)->get();
 
+        $us =  DB::table('users')
+          ->join('applicants','users.id', '=', 'applicants.user_id')
+          ->select('applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number')
+          ->where('users.id', '=', Auth::User()->id)->get();
+
         $vacancy = DB::table('vacancies')
         ->select('id')
         ->where('id', '=', $id)->get();
   
-        if ($education->isEmpty()) 
+        if ($education->isEmpty() && is_null($us->gender)) 
 
         return view('applications.apply');
 
