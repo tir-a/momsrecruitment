@@ -95,14 +95,14 @@
 <input type="text" class="form-control" id="confirmation" name="confirmation" value="{{  $interviews->confirmation  }}" readonly />
 </div>
 </div>
-</div>
+</div>  
 <div class="row">    
   <div class="col-6 d-flex text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
      <a class="btn btn-primary" href="{{ route('interviews.edit',$interviews->id) }}">Edit</a>&nbsp;
-     @endforeach
-
+  </div>
 </div>
+@endforeach
 </div>
 </div>
 </div>

@@ -121,7 +121,7 @@ td {
     <center>
     <table class="table table-bordered"  id="applications" style="width: 84%;">
         <tr>
-            <th class="text-center">ID</th>
+            <th class="text-center">Vacancy ID</th>
             <th class="text-center">Application ID</th>
             <th class="text-center">Date</th>
             <th class="text-center">Time</th>
