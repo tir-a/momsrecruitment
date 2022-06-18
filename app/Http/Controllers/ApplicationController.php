@@ -155,16 +155,13 @@ class ApplicationController extends Controller
         ->join('experiences','experiences.applicant_id', '=', 'applicants.id')
         ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
         ->join('branches','recruiters.branch_id', '=', 'branches.id')
-        ->select('vacancies.position as position', 'applications.app_status as app_status', 'applications.id as id', 
-                'applications.resume as resume', 'users.name as name' , 'users.email as email', 'applications.date_apply as date_apply','branches.location as location', 'applicants.gender as gender',
-                'applicants.date_of_birth as date_of_birth', 'applicants.phone_number as phone_number', 'applicants.address as address',
-                'educations.level as level',
+        ->select('educations.level as level',
                 'educations.certificate as certificate', 'educations.institution as institution', 'educations.grad_date as grad_date', 
                 'educations.grade as grade','educations.field_study as field_study',
                 'experiences.job as job', 'experiences.job_level as job_level',
                 'experiences.specialization as specialization', 'experiences.company as company', 'experiences.date_joined as date_joined', 
                 'experiences.working_year as working_year','experiences.detail as detail')
-        ->where('applications.id', '=', $applicant)->get();
+        ->where('applications.id', '=', $application)->get();
 
        }
        else if (Auth::User()->role == 'applicant'){
