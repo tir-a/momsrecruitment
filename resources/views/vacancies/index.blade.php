@@ -1,3 +1,6 @@
+@if (Route::has('login'))
+@auth
+
 @if(Auth::User()->role == 'recruiter')
 
 @extends('layouts.template')
@@ -11,3 +14,8 @@
 
 @endif
 
+@else
+@include('vacancies.table')
+
+@endauth
+@endif

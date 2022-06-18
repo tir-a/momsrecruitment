@@ -19,6 +19,13 @@ class VacancyController extends Controller
     {
         //$vacancies = Vacancy::all();
         //dd('branches');
+        $vacancies = DB::table('vacancies')
+        ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+        ->join('branches','branches.id', '=', 'recruiters.branch_id')
+         ->select('vacancies.id as id',
+          'vacancies.position as position','vacancies.status as status', 'vacancies.quantity as quantity', 
+          'vacancies.date_close as date_close', 'branches.location as location')->get();
+
     
         if (Auth::User()->role == 'applicant'){
 
@@ -49,6 +56,9 @@ class VacancyController extends Controller
 
         return view('vacancies.index', compact('branches') );
         }
+
+        return view('vacancies.index', compact('vacancies') );
+
     }
 
     /**

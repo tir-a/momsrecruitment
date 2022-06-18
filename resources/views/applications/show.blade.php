@@ -99,7 +99,6 @@
 
                    </div>
                   </div>
-
                   @foreach ($applicants as $applications)
 
                 <div class="card mb-4">
@@ -148,8 +147,10 @@
 
                    </div>
                   </div>
-                
-               
+                  @endforeach
+
+               @foreach ($experiences as $applications)
+
                 <div class="card mb-4">
                 <div class="card-header">Experience Details</div>
                 <div class="card-body">
@@ -207,6 +208,7 @@
                     </div>
                     </div>
                     </div>
+                    @endforeach
 
                    </div>
                   </div>
@@ -218,7 +220,6 @@
                       </div>
                       @endforeach
 
-                @endforeach
       </div>
 </div>
 
