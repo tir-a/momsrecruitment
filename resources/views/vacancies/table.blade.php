@@ -75,7 +75,7 @@ td {
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger delete" href="#">Delete</button>
+                    <a href="#" class="btn btn-danger delete">Delete</button>
                 </form>
             </td>
         </tr>
@@ -84,46 +84,26 @@ td {
     </body>
     @include('sweetalert::alert')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-    crossorigin="anonymous"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-            $('.delete').click (function(){
-                const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-                })
-
-                swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    swalWithBootstrapButtons.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your imaginary file is safe :)',
-                    'error'
-                    )
-                }
-                })
+    $('.delete').click(function(){
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to revert this action!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
             })
+            .then((willDelete) => {
+            if (willDelete) {
+                swal("Data has been deleted", {
+                icon: "success",
+                });
+            } else {
+                swal("Cancelled");
+            }
+            });
+    });
     </script>
 
 @endsection

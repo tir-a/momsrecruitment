@@ -26,7 +26,7 @@
 
 <div class="vertical-space-60"></div>
 <div class="job-post-box">
-<form action="{{ route('experiences.update',$experience->id) }}" method="POST">
+<form action="{{ route('experiences.update',$experience->id) }}" method="POST" onsubmit="return submitForm(this);">
         @csrf
         @method('PUT')
 <div class="row">
@@ -86,7 +86,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="working_year">Years in Position</label>
-<input type="text" class="form-control" id="working_year" name="working_year" value="{{  $experience->working_year  }}">
+<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" name="working_year" value="{{  $experience->working_year  }}">
 </div>
 </div>
 </div>
@@ -102,5 +102,29 @@
 </div>
 </div>
 </section>
+<script>
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
+}
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<script>
+        function submitForm(form) {
+        swal({
+            title: "Are you sure?",
+            text: "This form will be submitted",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then(function (isOkay) {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+        return false;
+    }
+</script>  
 <br><br>

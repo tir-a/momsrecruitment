@@ -49,3 +49,5 @@ Route::resource('applications', 'ApplicationController');
 Route::resource('interviews', 'InterviewController');
 Route::get('/applications/view/{id}', 'ApplicationController@view')->name('applications.view');
 Route::get('/vacancies/search', 'VacancyController@search')->name('vacancies.search');
+//Route::get('/sendSMS', 'NexmoSMSController@index');
+Route::get('/sendSMS', 'ApplicationController@sendSMS')->name('applications.sendSMS');

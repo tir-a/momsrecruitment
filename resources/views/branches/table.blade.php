@@ -1,5 +1,5 @@
 @section('content')
-
+<head>
 <style>
 #branches {
   font-family: Arial, Helvetica, sans-serif;
@@ -28,6 +28,14 @@ td {
 }
 </style>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.js" rel="stylesheet"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+
+
+</head>
 <body>
 <div class="row">
         <div class="col-lg-11 margin-tb">
@@ -68,11 +76,39 @@ td {
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a href="#" class="btn btn-danger delete">Delete</button>
                 </form>
             </td>
         </tr>
         @endforeach
     </table></center><br><br>
 </body>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    $('.delete').click(function(){
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to revert this action!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                swal("Data has been deleted", {
+                icon: "success",
+                });
+            } else {
+                swal("Cancelled");
+            }
+            });
+    });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#branches').DataTable();
+});
+</script>
 @endsection

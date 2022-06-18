@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB,Auth,file;
 use App\Vacancy;
+use App\Notifications\SMSNotification;
+use Notification;
+
 
 class ApplicationController extends Controller
 {
@@ -30,13 +33,10 @@ class ApplicationController extends Controller
         ->select('vacancies.position as position', 'applications.app_status as app_status', 
                   'applications.date_apply as date_apply', 'applications.id as id')
         ->where('vacancies.recruiter_id', '=', $users)->get();
-                 
-        
-        //dd($applications);
-        return view('applications.index', compact('applications') );
-    }
+                
+        }
 
-    else if (Auth::User()->role == 'applicant'){
+        else if (Auth::User()->role == 'applicant'){
        
         $users = DB::table('users')
         ->join('applicants','applicants.user_id', '=', 'users.id')
@@ -49,10 +49,10 @@ class ApplicationController extends Controller
         ->where('applicant_id', '=', $users)->get();
 
         //dd($applications);
+        }
         return view('applications.index', compact('applications') );
 
     }
-}
 
     /**
      * Show the form for creating a new resource.
@@ -69,17 +69,9 @@ class ApplicationController extends Controller
         $education = DB::table('applicants')
         ->join('educations','educations.applicant_id', '=', 'applicants.id')
         ->select('educations.id as id', 'applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number' )
-        //->where('users.id', '=', Auth::User()->id)->get();
-        ->where('applicant_id', '=', $users)->get();
-  
-        if (is_null($applicant->gender) && is_null($applicant->date_of_birth) && is_null($applicant->address) && is_null($applicant->phone_number)) 
-
-        return view('applications.apply');
-
-        else 
+        ->where('users.id', '=', Auth::User()->id)->get();
 
         return view('applications.create' , compact('vacancy'));
-
     }
 
     /**
@@ -121,12 +113,8 @@ class ApplicationController extends Controller
             'vacancy_id'=> $vacancy,       
          ]);
 
-
-                return redirect()->route('applications.index')
+        return redirect()->route('applications.index')
                 ->with('success','Application created successfully.');
-          
-        
-    
     }
 
     /**
@@ -158,6 +146,25 @@ class ApplicationController extends Controller
                 'experiences.specialization as specialization', 'experiences.company as company', 'experiences.date_joined as date_joined', 
                 'experiences.working_year as working_year','experiences.detail as detail')
         ->where('applications.id', '=', $application)->get();
+
+        $applicants = DB::table('vacancies')
+        ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
+        ->join('applicants','applications.applicant_id', '=', 'applicants.id')
+        ->join('users', 'users.id', '=', 'applicants.user_id')
+        ->join('educations','educations.applicant_id', '=', 'applicants.id')
+        ->join('experiences','experiences.applicant_id', '=', 'applicants.id')
+        ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+        ->join('branches','recruiters.branch_id', '=', 'branches.id')
+        ->select('vacancies.position as position', 'applications.app_status as app_status', 'applications.id as id', 
+                'applications.resume as resume', 'users.name as name' , 'users.email as email', 'applications.date_apply as date_apply','branches.location as location', 'applicants.gender as gender',
+                'applicants.date_of_birth as date_of_birth', 'applicants.phone_number as phone_number', 'applicants.address as address',
+                'educations.level as level',
+                'educations.certificate as certificate', 'educations.institution as institution', 'educations.grad_date as grad_date', 
+                'educations.grade as grade','educations.field_study as field_study',
+                'experiences.job as job', 'experiences.job_level as job_level',
+                'experiences.specialization as specialization', 'experiences.company as company', 'experiences.date_joined as date_joined', 
+                'experiences.working_year as working_year','experiences.detail as detail')
+        ->where('applications.id', '=', $applicant)->get();
 
        }
        else if (Auth::User()->role == 'applicant'){
@@ -208,14 +215,18 @@ class ApplicationController extends Controller
 
         ]);
 
-        $application_user = DB::table('recruiters')
+        $id = DB::table('recruiters')
         ->select('id')
         ->where('user_id', '=', Auth::User()->id)->first()->id;
 
         DB::table('applications')
         ->where('id',$application->id)->update([
             'app_status' => $request->app_status,
+            'recruiter_id' => $id,
+
         ]);
+
+        $this->sendSMS($application);
 
         return redirect()->route('applications.index')
         ->with('toast_success','Application updated successfully.');
@@ -286,7 +297,31 @@ class ApplicationController extends Controller
 
         return view('applications.create' , compact('vacancy', 'applicant'));
         */
+    }
+
+    public function sendSMS($application)
+    {//dd($application);
+        $user = DB::table('users')
+        ->join('applicants','applicants.user_id', '=', 'users.id')
+        ->select('applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth', 'applicants.address as address')
+        ->where('applicants.id', $application->applicant_id)
+        //$user = User::first();
+        ->first();
+  
+        $project = [
+            'greeting' => 'Hi ',
+            'body' => 'Your status of job application has been updated.',
+            'thanks' => 'Login to Moms Recruitment to view it.',
+            'actionText' => 'View Project',
+            'actionURL' => url('/'),
+        ];
+
+      //dd($user);
+//dd($project);
+        Notification::send($user, new SMSNotification($project));
+       
 
 
+        
     }
 }

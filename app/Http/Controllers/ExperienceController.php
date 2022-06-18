@@ -50,12 +50,12 @@ class ExperienceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'job'=>'required',
+        /*  'job'=>'required',
             'job_level'=>'required',
             'specialization'=>'required',
             'company'=>'required',
             'date_joined'=>'required',
-            'working_year'=>'required',
+            'working_year'=>'required',*/
 
         ]);
 

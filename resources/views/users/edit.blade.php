@@ -26,9 +26,7 @@
                      @csrf
                       @method('PUT')
    
-                        <!-- Form Row-->
                         <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="name">Name</label>
                                 <input class="form-control" id="name" type="text" name="name" value="{{ Auth::user()->name }}" required>
@@ -37,7 +35,6 @@
                             <label class="small mb-1" for="email">Email address</label>
                             <input class="form-control" id="email" type="email" name="email" value="{{ Auth::user()->email }}" required>
                         </div>
-                            <!-- Form Group (phone number)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="password">Password</label>
                                 <input class="form-control" id="password" type="password" name="password" value="{{ Auth::user()->password }}" required>
@@ -224,18 +221,16 @@
 </form>
 </div>
 </div>
-@include('sweetalert::alert')
 
 </section>
 <div class="vertical-space-100"></div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-    crossorigin="anonymous"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-    function submitForm(form) {
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+        function submitForm(form) {
         swal({
             title: "Are you sure?",
             text: "This form will be submitted",
@@ -250,7 +245,9 @@
         });
         return false;
     }
-    </script>
+  
+      
+</script>  
 
 
 

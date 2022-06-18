@@ -39,7 +39,8 @@ class RecruiterController extends Controller
        $branch=DB::select('select * from branches');
        $manager = DB::table('recruiters')
                     ->join('users','recruiters.user_id', '=', 'users.id')
-                    ->select('users.id as id', 'users.name as name')->where('users.id', '<>', $user->id)->get();
+                    ->select('users.id as id', 'users.name as name')
+                    ->where('users.id', '<>', $user->id)->get();
        return view('users.edit',compact('branch', 'user', 'manager'));
     
     }

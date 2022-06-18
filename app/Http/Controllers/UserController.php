@@ -23,7 +23,7 @@ class UserController extends Controller
              ->join('recruiters','recruiters.user_id', '=', 'users.id')
              ->join('branches','recruiters.branch_id', '=', 'branches.id')
              ->where('users.id',$user->id)
-             ->select('branches.location as location')->get();
+             ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password','branches.location as location')->get();
 
         $manager = DB::table('users')
              ->join('recruiters','recruiters.user_id', '=', 'users.id')
@@ -44,7 +44,8 @@ class UserController extends Controller
        $branch=DB::select('select * from branches');
        $manager = DB::table('recruiters')
                     ->join('users','recruiters.user_id', '=', 'users.id')
-                    ->select('recruiters.id as id', 'users.name as name')->where('users.id', '<>', $user->id)->get();
+                    ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password','recruiters.id as id', 'users.name as name')
+                    ->where('users.id', '<>', $user->id)->get();
 
        $applicant = DB::table('users')
        ->join('applicants','applicants.user_id', '=', 'users.id')
@@ -63,43 +64,44 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
-    { 
+    {  //dd($user);
         $request->validate([
             'name'=>'required',
             'email'=>'required',
             'password'=>'required',
-
         ]);
         //dd($request->manager_id);
-      
+       // dd($request->branch_id);
 
         if ($request->role=="recruiter"){
 
-
-        $user->update($request->all());
+      //  $user->update($request->all());
 
         $manager_id = DB::table('recruiters')
         ->select('id')
         ->where('id', '=', $request->manager_id)->first()->id;
-
-     
-        DB::table('recruiters')->where('user_id',$user->id)->update([
-            'branch_id' => $request->branch_id,
-            'manager_id' => $manager_id,
+        
+        DB::table('recruiters')
+           ->where('user_id',$user->id)
+            ->update([
+                'branch_id' => $request->branch_id,
+                'manager_id' => $manager_id,
         ]);
 
         }
         else if ($request->role=="applicant"){
 
-            $user->update($request->all());
-            DB::table('applicants')->where('user_id',$user->id)->update([
+            //$user->update($request->all());
+            DB::table('applicants')
+            ->where('user_id',$user->id)
+            ->update([
                 'gender' => $request->gender,
                 'date_of_birth' => $request->date_of_birth,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
         
-        ]);
-    }  
+            ]);
+        }  
         return redirect('users/'.$user->id.'');
     }
 

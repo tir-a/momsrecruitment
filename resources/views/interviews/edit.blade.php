@@ -26,6 +26,7 @@
 <form action="{{ route('interviews.update',$interview->id) }}" method="POST" onsubmit="return submitForm(this);">
     @csrf
     @method('PUT')
+    @foreach ($interviews as $interviews)
 
      <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-12">
@@ -51,7 +52,8 @@
         
                 <a class="btn btn-primary" href="{{ route('interviews.index') }}"> Back</a>
         </div>
-    </div>
+    </div>    @endforeach
+
 </form>
 
 </div></div>
@@ -121,9 +123,10 @@ function isNumberKey(evt){
 
 <div class="vertical-space-60"></div>
 <div class="job-post-box">
-<form action="{{ route('interviews.update',$interview->id) }}" method="POST">
+<form action="{{ route('interviews.update',$interview->id) }}" method="POST" onsubmit="return submitForm(this);">
         @csrf
         @method('PUT')
+        @foreach ($interviews as $interviews)
 
 <div class="row">
 <div class="col-lg-6 col-md-6">
@@ -161,10 +164,32 @@ function isNumberKey(evt){
       <div class="col-xs-12 col-sm-12 col-md-12">
                 <a><button type="submit" class="btn btn-success">Submit</button></a>
                 <a class="btn btn-primary" href="{{ route('interviews.index') }}"> Back</a>
-      </div>
+      </div>    @endforeach
+
 </form>
 </div>
 </section>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+        function submitForm(form) {
+        swal({
+            title: "Are you sure?",
+            text: "This form will be submitted",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then(function (isOkay) {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+        return false;
+    }
+  
+      
+</script>  
 
 <br><br>
 

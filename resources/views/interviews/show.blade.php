@@ -32,12 +32,13 @@
                         <strong>Confirmation Status:</strong>
                         <input type="text" name="status" value="{{ $interviews->confirmation }}" class="form-control" readonly />
                       </div>
+                      @endforeach
+
                 <div class="row">
                   <div class="col-12 d-flex justify-content-center  text-right">
                        <a class="btn btn-primary" href="{{ route('interviews.index') }}"> Back</a>
         </div>
     </div>
-    @endforeach
     </div>
                    </div>
                   </div>

@@ -31,19 +31,19 @@
 
 <div class="vertical-space-60"></div>
 <div class="job-post-box">
-<form action="{{ route('experiences.store') }}" method="POST">
+<form action="{{ route('experiences.store') }}" method="POST" onsubmit="return submitForm(this);">
     @csrf
 <div class="row">
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="job">Position</label>
-<input type="text" class="form-control" id="job" name="job" placeholder="Position" required />
+<input type="text" class="form-control" id="job" name="job" placeholder="Position">
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="job_level">Position Level</label>
-      <select class="form-control" id="job_level" name="job_level" required>
+      <select class="form-control" id="job_level" name="job_level">
             <option value="">Choose Position Level</option>
             <option value="Senior Manager">Senior Manager</option>
             <option value="Manager">Manager</option>
@@ -58,7 +58,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="specialization">Specialization</label>
-      <select class="form-control" id="specialization" name="specialization" required>
+      <select class="form-control" id="specialization" name="specialization">
             <option value="">Choose Specialization Group</option>
             <option value="Admin/Human Resources">Admin/Human Resources</option>
             <option value="Advertising/Media Planning">Advertising/Media Planning</option>
@@ -75,7 +75,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="company">Company</label>
-<input type="text" class="form-control" id="company" name="company" placeholder="Company" required />
+<input type="text" class="form-control" id="company" name="company" placeholder="Company">
 </div>
 </div>
 </div>
@@ -83,13 +83,13 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="date_joined">Date Joined</label>
-<input type="date" class="form-control" id="date_joined" name="date_joined" placeholder="Date Joined" required />
+<input type="date" class="form-control" id="date_joined" name="date_joined" placeholder="Date Joined">
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="working_year">Years in Position</label>
-<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" placeholder="Years in Position" required />
+<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" placeholder="Years in Position">
 </div>
 </div>
 </div>
@@ -120,4 +120,24 @@
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode;
     return !(charCode > 31 && (charCode < 48 || charCode > 57));
-}</script>
+}
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+        function submitForm(form) {
+        swal({
+            title: "Are you sure?",
+            text: "This form will be submitted",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then(function (isOkay) {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+        return false;
+    }
+</script>  

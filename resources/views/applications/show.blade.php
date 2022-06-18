@@ -100,7 +100,8 @@
                    </div>
                   </div>
 
-                
+                  @foreach ($applicants as $applications)
+
                 <div class="card mb-4">
                 <div class="card-header">Education Details</div>
                 <div class="card-body">
@@ -215,7 +216,8 @@
                         <a class="btn btn-primary" href="{{ route('applications.index') }}"> Back</a>
                         </div>
                       </div>
-                  
+                      @endforeach
+
                 @endforeach
       </div>
 </div>
