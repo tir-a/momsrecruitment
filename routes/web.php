@@ -23,6 +23,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/about', 'HomeController@about')->name('about');
 
+
+Route::get('/ghome', 'GuestController@index')->name('ghome');
+Route::get('/gcontact', 'GuestController@contact')->name('gcontact');
+Route::get('/gabout', 'GuestController@about')->name('gabout');
+Route::get('/gvacancy', 'GuestController@vacancy')->name('vacancy');
+Route::get('/showvacancy', 'GuestController@showvacancy')->name('showvacancy');
+
+
 //Route::get('/branches', 'BranchController@index')->name('branches.index');
 //create
 //Route::get('/branches', 'BranchController@create')->name('branches.create');
@@ -50,4 +58,4 @@ Route::resource('interviews', 'InterviewController');
 Route::get('/applications/view/{id}', 'ApplicationController@view')->name('applications.view');
 Route::get('/vacancies/search', 'VacancyController@search')->name('vacancies.search');
 //Route::get('/sendSMS', 'NexmoSMSController@index');
-Route::get('/sendSMS', 'ApplicationController@sendSMS')->name('applications.sendSMS');
+Route::get('/send', 'ApplicationController@send')->name('applications.send');

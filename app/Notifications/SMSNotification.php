@@ -5,22 +5,26 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\NexmoMessage;
-use Notification;
-
 
 class SMSNotification extends Notification
 {
     use Queueable;
 
     /**
+     * @var array $project
+     */
+    protected $project;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($project)
     {
-        //
+        $this->project = $project;
     }
 
     /**
@@ -31,7 +35,7 @@ class SMSNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database','nexmo'];
+        return ['nexmo'];
     }
 
     /**
@@ -40,14 +44,7 @@ class SMSNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-            ->greeting($this->project['greeting'])
-            ->line($this->project['body'])
-            ->action($this->project['actionText'], $this->project['actionURL'])
-            ->line($this->project['thanks']);
-    }
+   
 
     /**
      * Get the array representation of the notification.
@@ -55,12 +52,7 @@ class SMSNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
-    {
-        return [
-            'project_id' => $this->project['id']
-        ];
-    }
+    
 
     /**
      * Get the Nexmo / SMS representation of the notification.
@@ -72,6 +64,7 @@ class SMSNotification extends Notification
     {
         return (new NexmoMessage)
                     ->content($this->project['greeting'] . ' ' . $this->project['body']);
+                    
     }
 
     /**

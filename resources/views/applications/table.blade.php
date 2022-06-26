@@ -67,6 +67,8 @@
 <div class="vertical-space-60"></div>
 </section>
 
+@include('partial.footer')
+
 
 @elseif(Auth::User()->role == 'recruiter')
 @section('content')

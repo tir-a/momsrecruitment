@@ -1,3 +1,6 @@
+@if (Route::has('login'))
+@auth
+
 @if(Auth::User()->role == 'recruiter')
 @include('partial.topbar')
 @include('partial.sidebar')
@@ -102,3 +105,7 @@
 
 
 @endif
+
+@endauth
+@endif
+

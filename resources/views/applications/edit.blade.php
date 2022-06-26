@@ -31,8 +31,8 @@
                     <select class="form-control" id="app_status" name="app_status" required>
                         <option value="">-- Choose Status --</option>
                         <option value="Pending">Pending</option>
-                        <option value="Pass First Interview">Pass First Interview</option>
-                        <option value="Pass Second Interview" >Pass Second Interview</option>
+                        <option value="Pass First Interview">Pass for First Interview</option>
+                        <option value="Pass Second Interview" >Pass for Second Interview</option>
                         <option value="Fail"  >Fail</option>
                     </select>
                 </div>      

@@ -241,7 +241,6 @@ Moms Postnatal Care
 
 <title>Moms Postnatal Care</title>
 
-
 <script src="{{ asset('applicant/js/4n2NXumNjtg5LPp6VXLlDicTUfA.js') }}"></script>
         <link rel="apple-touch-icon" href="{{ asset('applicant/images/apple-touch-icon.html') }}">
         <link rel="shortcut icon" type="image/ico" href="{{ asset('applicant/images/favicon.html') }}" />
@@ -251,6 +250,20 @@ Moms Postnatal Care
         <link href="{{ asset('applicant/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('applicant/css/jquery-ui.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('applicant/css/style.css') }}">
+
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+         
+
+    <script>
+        $(document).ready(function(){
+
+            $(window).scroll(function() {
+                console.log('scrolled');
+                console.log(window.pageYOffset);
+            });
+
+        });
+    </script>
 
     <style>
       .special-image {
@@ -270,18 +283,18 @@ Moms Postnatal Care
 <div class="header_content d-flex flex-row align-items-center justify-content-start">
 <div class="logo_container">
 <img  class="special-image" src="{{ asset('applicant/imags/moms.png') }}" style="margin-right: 1rem;">
-</div>
-<div style="display:inline-block;" >
+</div><div style="display:inline-block;">
 <h3 class="font-color-white" style="font-size:160%;">
 Moms Postnatal Care
-  </h3>
+      </h3>
 </div>
 <nav class="main_nav_contaner ml-auto">
 <ul class="main_nav">
-<li><a href="{{route('home')}}">Home</a></li>
-<li><a href="{{ route('about') }}">About Us</a></li>
-<li><a href="{{ route('contact') }}">Contact</a></li>
-<li><a href=""> Job Vacancy</a></li>
+
+<li><a href="{{route('ghome')}}">Home</a></li>
+<li><a href="{{ route('gabout') }}">About Us</a></li>
+<li><a href="{{ route('gcontact') }}">Contact</a></li>
+<li><a href="{{route('vacancy')}}"> Job Vacancy</a></li>
 </ul>
 <div class=" Post-Jobs">
 <a href="{{ route('login') }}" class="">Sign in</a>
@@ -298,6 +311,53 @@ Moms Postnatal Care
 </div>
 </div>
 </div>
+
+<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+<div class="menu_close_container">
+<div class="menu_close">
+<div></div>
+<div></div>
+</div>
+</div>
+<div class="search">
+<form action="#" class="header_search_form menu_mm">
+<input type="search" class="search_input menu_mm" placeholder="Search" required="required">
+<button class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">
+<i class="fa fa-search menu_mm" aria-hidden="true"></i>
+</button>
+</form>
+</div>
+<nav class="menu_nav">
+<ul class="menu_mm">
+<li class="dropdown menu_mm">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">Home
+<span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="index.html">Home 1</a></li>
+<li><a href="index2.html">Home 2</a></li>
+</ul>
+</li>
+<li class="dropdown menu_mm">
+<a class="dropdown-toggle menu_mm" data-toggle="dropdown" href="#">Job
+<span class="caret"></span></a>
+<ul class="dropdown-menu menu_mm">
+<li class="menu_mm"><a href="job_category.html">Job List</a></li>
+<li class="menu_mm"><a href="job_detail.html">Job Detail</a></li>
+</ul>
+</li>
+<li class="menu_mm"><a href="blog_page.html">Blog</a></li>
+<li class="menu_mm"><a href="about_us.html">About</a></li>
+<li class="menu_mm"><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+</div>
+</header>
+
+
+
+
+
+
 
 @endauth
 @endif

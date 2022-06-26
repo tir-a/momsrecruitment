@@ -55,7 +55,9 @@
 </form>
 </div>
 </div>
+<div class="vertical-space-60"></div>
 </section>
 
+@include('partial.footer')
 
 

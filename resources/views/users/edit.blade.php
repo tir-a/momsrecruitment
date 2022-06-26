@@ -131,7 +131,7 @@
 <input class="form-control" id="role" type="hidden" name="role" value="{{ Auth::user()->role }}">
 <div class=" col-lg-6 col-md-12">
 <div class="form-group">
-<input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" >
+<input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}" required>
 </div>
 </div>
 </div>
@@ -143,19 +143,19 @@
 </div>
 <div class=" col-lg-6 col-md-12">
 <div class="form-group">
-<input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" >
+<input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" required>
 </div>
 </div>
 </div>
 <div class="row">
 <div class=" col-lg-2 col-md-8">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Password" style="border:none" >
+<input type="text" class="form-control" placeholder="Password" style="border:none">
 </div>
 </div>
 <div class=" col-lg-6 col-md-12">
 <div class="form-group">
-<input type="password" class="form-control" name="password" value="{{ Auth::user()->password }}" >
+<input type="password" class="form-control" name="password" value="{{ Auth::user()->password }}">
 </div>
 </div>
 </div>          
@@ -167,12 +167,12 @@
 </div>
 </div>&nbsp;&nbsp;&nbsp;&nbsp;
 <div class="form-group form-check form-check-inline ">
-            <input class="form-check-input" type="radio" name="gender" id="male" 
-              value="male" checked />
+            <input class="form-check-input" type="radio" name="gender" id="Male" 
+              value="Male" checked />
                 <label class="form-check-label" for="Male">Male</label>&nbsp;&nbsp;
-                 <input class="form-check-input" type="radio" name="gender" id="female"
-              value="female" />
-          <label class="form-check-label" for="female">Female</label>
+                 <input class="form-check-input" type="radio" name="gender" id="Female"
+              value="Female" />
+          <label class="form-check-label" for="Female">Female</label>
        </div>
 </div>
 <div class="row">
@@ -183,7 +183,7 @@
 </div>
 <div class=" col-lg-6 col-md-12">
 <div class="form-group">
-<input type="date" class="form-control" name="date_of_birth" value="{{ $applicant->date_of_birth }}" >
+<input type="date" class="form-control" name="date_of_birth" value="{{ $applicant->date_of_birth }}" required>
 </div>
 </div>
 </div>
@@ -195,7 +195,7 @@
 </div>
 <div class=" col-lg-6 col-md-12">
 <div class="form-group">
-<textarea rows="4" cols="50"  class="form-control" name="address">{{ old('address', $applicant->address) }}</textarea>
+<textarea rows="4" cols="50"  class="form-control" name="address" required>{{ old('address', $applicant->address) }}</textarea>
 </div>
 </div>
 </div>
@@ -207,7 +207,7 @@
 </div>
 <div class=" col-lg-6 col-md-12">
 <div class="form-group">
-<input type="text" class="form-control" name="phone_number" value="{{ $applicant->phone_number }}">
+<input type="text" class="form-control" name="phone_number" value="{{ $applicant->phone_number }}" required>
 </div>
 </div>
 </div>  
@@ -222,7 +222,6 @@
 </div>
 </div>
 
-</section>
 <div class="vertical-space-100"></div>
 </section>
 

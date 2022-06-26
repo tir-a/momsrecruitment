@@ -1,5 +1,4 @@
 @include('partial.topbar')
-
 <section id="intro">
 <div class="carousel-item active">
 <div class="carousel-background"><img src="{{ asset('applicant/imags/slider/slider1.jpg') }}" alt=""></div>

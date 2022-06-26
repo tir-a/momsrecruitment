@@ -99,10 +99,10 @@
 
                    </div>
                   </div>
-                  @foreach ($applicants as $applications)
 
                 <div class="card mb-4">
-                <div class="card-header">Education Details</div>
+                <div class="card-header">Education Details</div>               
+                   @foreach ($applicants as $applications)
                 <div class="card-body">
                   <div class="card mb-3">
                    <div class="card-body">     
@@ -144,14 +144,12 @@
                     </div>
                     </div>
                     </div>
-
-                   </div>
+                   </div>                    
+                   @endforeach
                   </div>
-                  @endforeach
 
-               @foreach ($experiences as $applications)
-
-                <div class="card mb-4">
+                  @foreach ($experiences as $applications)
+                <div class="card mb-4">              
                 <div class="card-header">Experience Details</div>
                 <div class="card-body">
                   <div class="card mb-3">
@@ -208,11 +206,11 @@
                     </div>
                     </div>
                     </div>
-                    @endforeach
-
                    </div>
                   </div>
                   </div>
+                  @endforeach
+
                       <div class="row">
                         <div class="col-12 d-flex justify-content-center  text-right">
                         <a class="btn btn-primary" href="{{ route('applications.index') }}"> Back</a>
@@ -302,6 +300,9 @@
 </div>
 </div>
 </div>
-</section><br><br>
+<div class="vertical-space-60"></div>
+</section>
+
+@include('partial.footer')
 
 @endif

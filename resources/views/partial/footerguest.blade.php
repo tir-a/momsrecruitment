@@ -9,8 +9,8 @@
 <div class="col-lg-2 col-md-4 vertical-space-2">
 <h5>Company</h5>
 <div class="text">
-<a href="{{ route('about') }}">About</a>
-<a href="{{ route('contact') }}">Contact Us</a>
+<a href="{{ route('gabout') }}">About</a>
+<a href="{{ route('gcontact') }}">Contact Us</a>
 </div>
 </div>
 

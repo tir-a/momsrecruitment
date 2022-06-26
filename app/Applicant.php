@@ -8,7 +8,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Applicant extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
 
     public $table ="applicants";
 

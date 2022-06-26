@@ -101,7 +101,11 @@
 </form>
 </div>
 </div>
+<div class="vertical-space-60"></div>
 </section>
+
+@include('partial.footer')
+
 <script>
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -127,4 +131,3 @@ function isNumberKey(evt){
         return false;
     }
 </script>  
-<br><br>

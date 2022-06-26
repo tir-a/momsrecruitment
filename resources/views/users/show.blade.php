@@ -44,9 +44,7 @@
                       <h6 class="mb-0">Manager</h6>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                        @foreach ( $manager as $manager )
                                 {{ $manager->name }}
-                        @endforeach
                         </div>
                     </div>
                     </div>
@@ -192,9 +190,7 @@
 
 </div>
 </div>
-</section>
 <div class="vertical-space-100"></div>
 </section>
-
 
 @endif

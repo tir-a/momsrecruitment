@@ -76,4 +76,7 @@
 </div>
 </div>
 </div>
-</section><br><br>
+<div class="vertical-space-60"></div>
+</section>
+
+@include('partial.footer')

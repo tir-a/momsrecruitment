@@ -27,14 +27,15 @@ class UserController extends Controller
 
         $manager = DB::table('users')
              ->join('recruiters','recruiters.user_id', '=', 'users.id')
-             ->select('users.name as name')->get();//retrieve
+             ->join('branches','recruiters.branch_id', '=', 'branches.id')
+             ->select('users.name as name','branches.location as location')->first();//retrieve nama mgr
              
-        $applicant = DB::table('users')//join
+        $applicant = DB::table('users')
               ->join('applicants','applicants.user_id', '=', 'users.id')
               ->where('users.id',$user->id)
               ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth', 'applicants.address as address', 'applicants.phone_number as phone_number')->get();
 
-        return view('users.show', compact('user', 'branch', 'applicant', 'manager'));//tambah applicant
+        return view('users.show', compact('user', 'branch', 'applicant', 'manager'));
 
     }
 
@@ -64,34 +65,51 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
-    {  //dd($user);
+    {  //dd($request->all());
         $request->validate([
             'name'=>'required',
             'email'=>'required',
             'password'=>'required',
         ]);
-        //dd($request->manager_id);
        // dd($request->branch_id);
-
-        if ($request->role=="recruiter"){
+//dd($request->role);
+        if (Auth::User()->role == 'recruiter'){
 
       //  $user->update($request->all());
 
         $manager_id = DB::table('recruiters')
         ->select('id')
         ->where('id', '=', $request->manager_id)->first()->id;
-        
+     // dd($user->id);
+
+     DB::table('users')
+     ->where('id',$user->id)
+      ->update([
+          'name' => $request->name,
+          'email' => $request->email,
+          'password'=>$request->password,
+
+  ]);
         DB::table('recruiters')
            ->where('user_id',$user->id)
             ->update([
                 'branch_id' => $request->branch_id,
                 'manager_id' => $manager_id,
         ]);
+       // dd("test");
 
         }
-        else if ($request->role=="applicant"){
+        else if (Auth::User()->role=="applicant"){
 
             //$user->update($request->all());
+            DB::table('users')
+     ->where('id',$user->id)
+      ->update([
+          'name' => $request->name,
+          'email' => $request->email,
+          'password'=>$request->password,
+
+  ]);
             DB::table('applicants')
             ->where('user_id',$user->id)
             ->update([

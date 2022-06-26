@@ -193,6 +193,8 @@ td {
 </div>
 <div class="vertical-space-60"></div>
 </section>
+@include('partial.footer')
+
 
 
 
@@ -200,6 +202,7 @@ td {
 
 @else
 
+@include('partial.topbar')
 
 <section id="intro">
 <div class="carousel-item active">
@@ -253,7 +256,7 @@ td {
 <i class="large material-icons">place</i>
 <span class="text font-size"> Location: {{ $v-> location }}</span>
 <div class="float-right margin-top text-align-center">
-<a href="{{ route('vacancies.show' , $v->id)   }}" class="btn btn-info">View</a><br><br>
+<a href="{{ route('showvacancy' , $v->id)   }}" class="btn btn-info">View</a><br><br>
 <p class="date-time">Closing date: {{ $v-> date_close }} </p>
 </div>
 </div>
@@ -281,6 +284,7 @@ td {
 </div>
 <div class="vertical-space-60"></div>
 </section>
+
 @endauth
 
 @endif

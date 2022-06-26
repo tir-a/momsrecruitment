@@ -67,6 +67,8 @@
 <div class="vertical-space-60"></div>
 </section>
 
+@include('partial.footer')
+
 
 @elseif(Auth::User()->role == 'recruiter')
 @section('content')
@@ -131,7 +133,7 @@ td {
 
         @foreach ($interviews as $iv)
         <tr>
-            <td>{{ $iv->id }}</td>
+            <td>{{ $iv->v_id }}</td>
             <td>{{ $iv->app_id}}</td>
             <td>{{ $iv->date}}</td>
             <td>{{ $iv->time}}</td>
@@ -147,14 +149,37 @@ td {
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger delete">Delete</button>
+                    <button type="submit" class="btn btn-danger" >Delete</button>
                 </form>
             </td>
         </tr>
         @endforeach
-
     </table></center>
     </body>
+    @include('sweetalert::alert')
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $('.delete').click(function(){
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to revert this action!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data has been deleted", {
+                    icon: "success",
+                    });
+                } else {
+                    swal("Cancelled");
+                }
+                });
+        });
+    </script>
+   
    
 
 @endsection

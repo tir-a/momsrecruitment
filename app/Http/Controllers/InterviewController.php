@@ -29,7 +29,7 @@ class InterviewController extends Controller
         ->join('applications','interviews.application_id', '=', 'applications.id')
         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time','interviews.id as id',  
-        'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as id')
+        'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as v_id')
         ->where('vacancies.recruiter_id', '=', $users)->get();
 
         //dd('branches');
@@ -46,7 +46,7 @@ class InterviewController extends Controller
         ->join('applications','interviews.application_id', '=', 'applications.id')
         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time','interviews.id as id',  
-        'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as id')
+        'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as v_id')
         ->where('applicant_id', '=', $users)->get();
 
         //dd('branches');
@@ -62,6 +62,7 @@ class InterviewController extends Controller
     public function create()
     {
         $application=DB::select('select * from applications');
+        
         return view('interviews.create', compact('application'));
     }
 
@@ -98,7 +99,7 @@ class InterviewController extends Controller
     public function show($interview)
     {
         if (Auth::User()->role == 'recruiter'){
-
+//dd($interview);
         $interviews = DB::table('interviews')
         ->join('applications','interviews.application_id', '=', 'applications.id')
         ->join('applicants','applications.applicant_id', '=', 'applicants.id')
@@ -107,24 +108,23 @@ class InterviewController extends Controller
         ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time',  
         'interviews.confirmation as confirmation', 'applications.id as app_id')
-        ->where('vacancies.id', '=', $interview)->get();
+        ->where('interviews.id', '=', $interview)->get();
          // ->toSql();
          //dd(Auth::User()->id);
         }
 
         else if (Auth::User()->role == 'applicant'){
-
-            $users = DB::table('users')
-            ->join('applicants','applicants.user_id', '=', 'users.id')
-            ->select('applicants.id as id')
-            ->where('user_id', '=', Auth::User()->id)->first()->id;
+//dd($interview);
 
             $interviews = DB::table('interviews')
             ->join('applications','interviews.application_id', '=', 'applications.id')
+            ->join('applicants','applications.applicant_id', '=', 'applicants.id')
+            ->join('users', 'users.id', '=', 'applicants.user_id')
             ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
-            ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time','interviews.id as id',  
-            'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as id')
-            ->where('applicant_id', '=', $users)->get();
+            //->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+            ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time',  'interviews.id as id',  
+            'interviews.confirmation as confirmation', 'applications.id as app_id')
+            ->where('interviews.id', '=', $interview)->get();
 
             }
         return view('interviews.show', compact('interviews') );
@@ -138,14 +138,30 @@ class InterviewController extends Controller
      */
     public function edit($interview)
     {   //dd(Interview::get()); // $interview = Interview::findOrFail($id);
+        if (Auth::User()->role == 'recruiter'){
 
-           $interview = DB::table('interviews')
-           ->join('applications','interviews.application_id', '=', 'applications.id')
-           ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
-           ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time',
-           'interviews.confirmation as confirmation', 'interviews.id as id', 'applications.id as app_id')
-           ->where('vacancies.id', '=', $interview)->get();
-        
+        $interview = DB::table('interviews')
+        ->join('applications','interviews.application_id', '=', 'applications.id')
+        ->join('applicants','applications.applicant_id', '=', 'applicants.id')
+        ->join('users', 'users.id', '=', 'applicants.user_id')
+        ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
+        ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+        ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time', 'interviews.id as id',
+        'interviews.confirmation as confirmation', 'applications.id as app_id')
+        ->where('interviews.id', '=', $interview)->get();
+          }
+          else if (Auth::User()->role == 'applicant'){
+            $interview = DB::table('interviews')
+            ->join('applications','interviews.application_id', '=', 'applications.id')
+            ->join('applicants','applications.applicant_id', '=', 'applicants.id')
+            ->join('users', 'users.id', '=', 'applicants.user_id')
+            ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
+           // ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+            ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time', 'interviews.id as id',
+            'interviews.confirmation as confirmation', 'applications.id as app_id')
+            ->where('interviews.id', '=', $interview)->get();
+          }
+
           // dd($interview);
             
             return view('interviews.edit', compact('interview'));

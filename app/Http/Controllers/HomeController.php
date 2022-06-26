@@ -27,25 +27,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')
-            ->join('recruiters','recruiters.user_id', '=', 'users.id')
-            ->select('recruiters.id as id')
-            ->where('user_id', '=', Auth::User()->id)->first()->id;
-    
         $applications = DB::table('vacancies')
         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
+        ->join('recruiters','applications.recruiter_id', '=', 'recruiters.id')
+        ->join('users', 'users.id', '=', 'recruiters.user_id')
         ->select('vacancies.position as position', 'applications.app_status as app_status', 
                   'applications.date_apply as date_apply', 'applications.id as id')
-        ->where('vacancies.recruiter_id', '=', $users)->get();
+        ->where('user_id', '=', Auth::User()->id)->count();
 
-        $vacancies = DB::table('vacancies')
+        $vacancies = DB::table('vacancies')        
+        ->join('recruiters','recruiters.id', '=', 'vacancies.recruiter_id')
+        ->join('users', 'users.id', '=', 'recruiters.user_id')
         ->select('vacancies.id as id',
          'vacancies.position as position', 'vacancies.status as status', 'vacancies.quantity as quantity', 
          'vacancies.date_close as date_close', 'vacancies.recruiter_id as recruiter_id')
-        ->where('recruiter_id', '=', $users)->get();
-
-        $vacancies = Vacancy::count();
-        $applications = Application::count();
+         ->where('user_id', '=', Auth::User()->id)->count();
 
         return view('home', compact('applications', 'vacancies'));
     }
@@ -60,11 +56,5 @@ class HomeController extends Controller
     {
 
         return view('about');
-    }
-
-    public function count($id)
-    {
-      $showCounts = Application::where('id',$id)->count();
-      return view('home',['showCounts'=>$showCounts,'id'=>$id]);
     }
 }

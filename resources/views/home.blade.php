@@ -1,3 +1,6 @@
+@if (Route::has('login'))
+@auth
+
 @if(Auth::User()->role == 'recruiter')
 
 @extends('layouts.template')
@@ -32,39 +35,37 @@
 </head>
 <section class="content">
       <div class="container-fluid">
-        <!-- Info boxes -->
+        <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-file"></i></span>
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3> {{$vacancies}} </h3>
 
-              <div class="info-box-content">
-                <span class="info-box-text">Job Applications</span>
-                <span class="info-box-number">
-                {{$applications}}
-                </span>
+                <p>Available Vacancies</p>
               </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-briefcase"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Available Vacancies</span>
-                <span class="info-box-number">   {{$vacancies}} </span>
+              <div class="icon">
+                <i class="ion ion-briefcase"></i>
               </div>
-              <!-- /.info-box-content -->
+              <a href="{{route('vacancies.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <!-- /.info-box -->
           </div>
-          </div>        
-        </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3> {{$applications}} </h3>
 
-        
+                <p>Job Applications</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-document-text"></i>
+              </div>
+              <a href="{{route('applications.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
 </section>
 
 
@@ -77,6 +78,18 @@
 @section('content')
 
 @endsection
+
 @endif
 
 
+@else
+
+@include('layouts.homeapp')
+
+@section('content')
+
+@endsection
+
+@endauth
+
+@endif

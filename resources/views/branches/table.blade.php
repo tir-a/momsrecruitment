@@ -34,6 +34,7 @@ td {
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
 </head>
 <body>
@@ -82,8 +83,14 @@ td {
         </tr>
         @endforeach
     </table></center><br><br>
-</body>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
+</body>
+<script>
+	$(document).ready(function() {
+    	$('#branches').DataTable();
+	});
+</script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     $('.delete').click(function(){
@@ -106,9 +113,5 @@ td {
     });
 </script>
 
-<script type="text/javascript">
-$(document).ready(function () {
-    $('#branches').DataTable();
-});
-</script>
+
 @endsection

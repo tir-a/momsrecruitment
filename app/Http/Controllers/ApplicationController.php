@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Applicant;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB,Auth,file;
@@ -131,8 +132,6 @@ class ApplicationController extends Controller
         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
         ->join('applicants','applications.applicant_id', '=', 'applicants.id')
         ->join('users', 'users.id', '=', 'applicants.user_id')
-        //->join('educations','educations.applicant_id', '=', 'applicants.id')
-        //->join('experiences','experiences.applicant_id', '=', 'applicants.id')
         ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
         ->join('branches','recruiters.branch_id', '=', 'branches.id')
         ->select('vacancies.position as position', 'applications.app_status as app_status', 'applications.id as id', 
@@ -164,6 +163,8 @@ class ApplicationController extends Controller
                 'experiences.working_year as working_year','experiences.detail as detail')
         ->where('applications.id', '=', $application)->get();
         
+        return view('applications.show', compact('applications', 'applicants', 'experiences') );
+
        }
 
        else if (Auth::User()->role == 'applicant'){
@@ -176,14 +177,10 @@ class ApplicationController extends Controller
         ->select('vacancies.position as position', 'applications.app_status as app_status', 'applications.id as id', 
                 'applications.resume as resume','applications.date_apply as date_apply','branches.location as location' )
         ->where('applications.id', '=', $application)->get();
+
+        return view('applications.show', compact('applications') );
+
        }
-
-      // if (is_null($experience->job) && is_null($experiences->job_level)  && is_null($experiences->grad_date)
-      // && is_null($experiences->company) && is_null($experiences->date_joined) && is_null($experiences->working_year)
-     //  && is_null($experiences->detail)){
-        
-
-        return view('applications.show', compact('applications', 'applicants', 'experiences') );
 
     }
 
@@ -225,7 +222,7 @@ class ApplicationController extends Controller
 
         ]);
 
-        $this->sendSMS($application);
+        $this->send($application);
 
         return redirect()->route('applications.index')
         ->with('toast_success','Application updated successfully.');
@@ -256,71 +253,55 @@ class ApplicationController extends Controller
         $us =  DB::table('users')
           ->join('applicants','users.id', '=', 'applicants.user_id')
           ->select('applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number')
+          ->where('users.id', '=', Auth::User()->id)->first();//get?
+
+        $applicant = DB::table('users')
+          ->join('applicants','applicants.user_id', '=', 'users.id')
+          ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth', 'applicants.address as address', 'applicants.phone_number as phone_number')
           ->where('users.id', '=', Auth::User()->id)->get();
 
         $vacancy = DB::table('vacancies')
         ->select('id')
         ->where('id', '=', $id)->get();
   
-        if ($education->isEmpty() && is_null($us->gender)) 
 
-        return view('applications.apply');
+        if ($education->isEmpty() || is_null($us->gender) || is_null($us->date_of_birth) ||  is_null($us->address) ||  is_null($us->phone_number))
+
+        return view('applications.apply' , compact('us', 'applicant'));
 
         else 
 
         return view('applications.create' , compact('vacancy'));
-
-        /*
-        $applicant = DB::table('users')
-        ->join('applicants','applicants.user_id', '=', 'users.id')
-        ->select('applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number')
-        ->where('user_id', '=', Auth::User()->id)->first()->id;
-
-        $education = DB::table('applicants')
-        ->join('educations','educations.applicant_id', '=', 'applicants.id')
-        ->join('users','users.id', '=', 'applicants.user_id')
-        ->select('educations.id as id')
-        //->where('users.id', '=', Auth::User()->id)->get();
-        ->where('applicant_id', '=', $applicant)->get();
-
-
-        $vacancy = DB::table('vacancies')
-        ->select('id')
-        ->where('id', '=', $id)->get();
-
-        if ($education->isEmpty() && is_null($applicant->gender)) //&& is_null($applicant->date_of_birth) && is_null($applicant->address) && is_null($applicant->phone_number))
-
-        return view('applications.apply');
-
-        else 
-
-        return view('applications.create' , compact('vacancy', 'applicant'));
-        */
+        
     }
 
-    public function sendSMS($application)
+    public function send($application)
     {//dd($application);
         $user = DB::table('users')
         ->join('applicants','applicants.user_id', '=', 'users.id')
-        ->select('applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth', 'applicants.address as address')
-        ->where('applicants.id', $application->applicant_id)
-        //$user = User::first();
+        ->select('users.id as uid', 'applicants.id as id', 'applicants.phone_number as phone_number')
+        ->where('applicants.id',$application->applicant_id)
         ->first();
-  
+    	//$user = User::first();
+
+       // dd($user);
+
+    //   $std = new \stdClass();
+  //  $std->phone_number;
+   //$std->project = $project;
+
         $project = [
             'greeting' => 'Hi ',
-            'body' => 'Your status of job application has been updated.',
-            'thanks' => 'Login to Moms Recruitment to view it.',
-            'actionText' => 'View Project',
-            'actionURL' => url('/'),
+            'body' => 'Your status of job application has been updated. Login to Moms Recruitment to view it.',
         ];
 
       //dd($user);
-//dd($project);
-        Notification::send($user, new SMSNotification($project));
-       
+       // dd($project);
+     Notification::send($user, new SMSNotification($project));
+       //Notification::send('nexmo', $user->phone_number)->notify(new SMSNotification($project));
 
 
-        
+         dd('Notification sent!');
+
     }
 }
