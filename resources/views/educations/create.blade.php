@@ -17,7 +17,7 @@
 @if ($education->isEmpty())
 <section id="Blog">
 <div class="row">
-    <div class="col-lg-8 col-md-6">
+    <div class="col-lg-6 col-md-6">
      <div class="blog-box">
         <div class="text-left">
             <p>Profile Status: <span style="color: #ff0000; font-weight:bold;">Incomplete</span></p>
@@ -108,6 +108,7 @@
 </div>
 </div>
 </div>
+
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <a><button type="submit" class="btn btn-success">Submit</button></a>
                 <a class="btn btn-primary" href="{{ route('educations.index') }}"> Back</a>
@@ -120,8 +121,12 @@
 </section>
 
 @include('partial.footer')
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
 <script>
     $(function() {
   $('#datepicker').datepicker({

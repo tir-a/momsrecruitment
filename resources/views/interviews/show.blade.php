@@ -28,6 +28,10 @@
                         <strong>Time:</strong>
                         <input type="time" class="form-control" name="time" value="{{ $interviews->time }}" readonly />
                        </div>
+                       <div class="form-group">
+                        <strong>Zoom Platform:</strong>
+                        <input type="text" class="form-control" name="platform" value="{{ $interviews->platform }}" readonly />
+                       </div>
                       <div class="form-group">
                         <strong>Confirmation Status:</strong>
                         <input type="text" name="status" value="{{ $interviews->confirmation }}" class="form-control" readonly />
@@ -78,25 +82,31 @@
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Date" style="border:none" readonly />
-<input type="text" class="form-control" id="date" name="date" value="{{  $interviews->date  }}" readonly />
+<input type="text" class="form-control" placeholder="Confirmation Status" style="border:none" readonly />
+<input type="text" class="form-control" id="confirmation" name="confirmation" value="{{  $interviews->confirmation  }}" readonly />
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Time" style="border:none" readonly />
-<input type="text" class="form-control" id="time" name="time" value="{{  $interviews->time  }}" readonly />
+<input type="text" class="form-control" placeholder="Date" style="border:none" readonly />
+<input type="text" class="form-control" id="date" name="date" value="{{  $interviews->date  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Confirmation Status" style="border:none" readonly />
-<input type="text" class="form-control" id="confirmation" name="confirmation" value="{{  $interviews->confirmation  }}" readonly />
+<input type="text" class="form-control" placeholder="Time" style="border:none" readonly />
+<input type="text" class="form-control" id="time" name="time" value="{{  $interviews->time  }}" readonly />
 </div>
 </div>
-</div>  
+<div class="col-lg-10 col-md-8">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Zoom Platform" style="border:none" readonly />
+&nbsp;&nbsp;<a href="{{ $interviews->platform  }}" target="_blank"> {{ $interviews->platform   }}</a>
+</div>
+</div>
+</div><br><br>
 <div class="row">    
   <div class="col-6 d-flex text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;

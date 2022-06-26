@@ -112,7 +112,7 @@
 </div>
 
 @foreach ($applicant as $applicant)
-@if ($applicant->gender==null and $applicant->date_of_birth==null and $applicant->address==null and $applicant->phone_number==null)
+@if ($applicant->gender==null or $applicant->date_of_birth==null or $applicant->address==null or $applicant->phone_number==null)
 <section id="Blog">
 <div class="row">
     <div class="col-lg-8 col-md-6">

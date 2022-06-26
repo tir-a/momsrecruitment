@@ -61,10 +61,12 @@
   <div class="col-6 d-flex text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
      <a class="btn btn-primary" href="{{ route('educations.edit',$education->id) }}">Edit</a>&nbsp;
+     @if ($applications->isNotEmpty())
       <form action="{{ route('educations.destroy',$education->id) }}" method="POST">
            @csrf
            @method ('DELETE')
-     <a> <button type="submit" class="btn btn-danger" >Delete</button></a>
+       <a> <button type="submit" class="btn btn-danger" >Delete</button></a>
+     @endif
      </form>
 </div>
 </div>

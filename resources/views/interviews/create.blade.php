@@ -44,6 +44,10 @@
                 <strong>Time:</strong>
                 <input type="time" class="form-control" name="time"  placeholder="Time" required>
             </div>
+            <div class="form-group">
+                <strong>Zoom Platform:</strong>
+                <input type="url" class="form-control" name="platform"  placeholder="Link" required>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-success">Submit</button>

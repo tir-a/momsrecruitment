@@ -43,6 +43,10 @@
                 <input type="time" class="form-control" name="time" value="{{ $interview->time }}" required>
             </div>
             <div class="form-group">
+                <strong>Zoom Platform:</strong>
+                <input type="url" class="form-control" name="platform" value="{{ $interview->platform }}" readonly/>
+            </div>
+            <div class="form-group">
                 <strong>Confirmation Status:</strong>
                 <input type="text" class="form-control" name="confirmation" value="{{ $interview->confirmation }}" readonly/>
             </div>
@@ -137,20 +141,6 @@ function isNumberKey(evt){
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<label for="date">Date</label>
-<input type="text" class="form-control" id="date" name="date" value="{{  $interview->date  }}" readonly/>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-lg-6 col-md-6">
-<div class="form-group">
-<label for="time">Time</label>
-<input type="text" class="form-control" id="time" name="time" value="{{  $interview->time  }}" readonly/>
-</div>
-</div>
-<div class="col-lg-6 col-md-6">
-<div class="form-group">
 <label for="confirmation">Confirmation Status</label>
 <select class="form-control" id="confirmation" name="confirmation">
             <option  value="{{  $interview->confirmation }}">Choose Status</option>
@@ -160,12 +150,35 @@ function isNumberKey(evt){
 </div>
 </div>
 </div>
+<div class="row">
+<div class="col-lg-6 col-md-6">
+<div class="form-group">
+<label for="date">Date</label>
+<input type="text" class="form-control" id="date" name="date" value="{{  $interview->date  }}" readonly/>
+</div>
+</div>
+<div class="col-lg-6 col-md-6">
+<div class="form-group">
+<label for="time">Time</label>
+<input type="text" class="form-control" id="time" name="time" value="{{  $interview->time  }}" readonly/>
+</div>
+</div>
+</div>
 
+<div class="row">
+<div class="col-lg-10 col-md-8">
+<div class="form-group">
+<label for="platform">Zoom Platform</label>
+<div class="col-lg-10 col-md-8">
+<a href="{{ $interview->platform  }}" target="_blank"> {{ $interview->platform   }}</a>
+</div>
+</div>
+</div>
+</div>
       <div class="col-xs-12 col-sm-12 col-md-12">
                 <a><button type="submit" class="btn btn-success">Submit</button></a>
                 <a class="btn btn-primary" href="{{ route('interviews.index') }}"> Back</a>
       </div>  
-
 </form>  
 @endforeach
 </div>

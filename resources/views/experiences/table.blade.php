@@ -17,9 +17,8 @@
 <div class="vertical-space-55"></div>
 
 <div class="col-lg-12 col-md-12">
-<h3 class="text-left">Experience</h3>
+<h3 class="text-left">List of Experiences</h3>
 <div class="vertical-space-5"></div>
-<p class="text-left">Details</p>
 <br>
 <div class="row">
         <div class="col-lg-12 margin-tb">

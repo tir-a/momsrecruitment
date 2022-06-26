@@ -29,7 +29,7 @@ class InterviewController extends Controller
         ->join('applications','interviews.application_id', '=', 'applications.id')
         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time','interviews.id as id',  
-        'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as v_id')
+        'interviews.confirmation as confirmation',  'interviews.platform as platform', 'applications.id as app_id', 'vacancies.id as v_id')
         ->where('vacancies.recruiter_id', '=', $users)->get();
 
         //dd('branches');
@@ -46,7 +46,7 @@ class InterviewController extends Controller
         ->join('applications','interviews.application_id', '=', 'applications.id')
         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time','interviews.id as id',  
-        'interviews.confirmation as confirmation', 'applications.id as app_id', 'vacancies.id as v_id')
+        'interviews.confirmation as confirmation', 'interviews.platform as platform', 'applications.id as app_id', 'vacancies.id as v_id')
         ->where('applicant_id', '=', $users)->get();
 
         //dd('branches');
@@ -77,12 +77,14 @@ class InterviewController extends Controller
         $request->validate([
             'date'=>'required',
             'time'=>'required',
+            'platform'=>'required',
 
         ]);
 
                 DB::table('interviews')->insert([
                     'date' => $request->date,
                     'time'=> $request->time,
+                    'platform'=> $request->platform,
                     'application_id'=> $request->application_id,
                 ]);
         
@@ -107,7 +109,7 @@ class InterviewController extends Controller
         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
         ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time',  
-        'interviews.confirmation as confirmation', 'applications.id as app_id')
+        'interviews.confirmation as confirmation', 'interviews.platform as platform',  'applications.id as app_id')
         ->where('interviews.id', '=', $interview)->get();
          // ->toSql();
          //dd(Auth::User()->id);
@@ -123,7 +125,7 @@ class InterviewController extends Controller
             ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
             //->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
             ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time',  'interviews.id as id',  
-            'interviews.confirmation as confirmation', 'applications.id as app_id')
+            'interviews.confirmation as confirmation', 'interviews.platform as platform', 'applications.id as app_id')
             ->where('interviews.id', '=', $interview)->get();
 
             }
@@ -147,7 +149,7 @@ class InterviewController extends Controller
         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
         ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
         ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time', 'interviews.id as id',
-        'interviews.confirmation as confirmation', 'applications.id as app_id')
+        'interviews.confirmation as confirmation', 'interviews.platform as platform', 'applications.id as app_id')
         ->where('interviews.id', '=', $interview)->get();
           }
           else if (Auth::User()->role == 'applicant'){
@@ -158,7 +160,7 @@ class InterviewController extends Controller
             ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
            // ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
             ->select('vacancies.position as position', 'interviews.date as date', 'interviews.time as time', 'interviews.id as id',
-            'interviews.confirmation as confirmation', 'applications.id as app_id')
+            'interviews.confirmation as confirmation', 'interviews.platform as platform', 'applications.id as app_id')
             ->where('interviews.id', '=', $interview)->get();
           }
 
@@ -183,6 +185,7 @@ class InterviewController extends Controller
         $request->validate([
             'date'=>'required',
             'time'=>'required',
+            'platform'=>'required',
 
         ]);
 
@@ -190,6 +193,7 @@ class InterviewController extends Controller
         ->where('id',$interview)->update([
             'date' => $request->date,
             'time' => $request->time,
+            'platform'=>$request->platform,
 
         ]);
 

@@ -274,12 +274,10 @@
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12 col-md-6">
+<div class="col-lg-10 col-md-8">
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Resume" style="border:none" readonly />
-<div class="col-lg-6 col-md-6">
-<a href="{{ asset('/file/'.$applications->resume) }}" target="_blank"> {{  $applications->resume  }}</a>
-</div>
+&nbsp;&nbsp;<a href="{{ asset('/file/'.$applications->resume) }}" target="_blank"> {{  $applications->resume  }}</a>
 </div>
 </div>
 </div>

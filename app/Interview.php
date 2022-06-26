@@ -8,5 +8,5 @@ class Interview extends Model
 {
     public $table ="interviews";
 
-    protected $fillable = ['date', 'time', 'confirmation', 'application_id'];
+    protected $fillable = ['date', 'time', 'confirmation', 'platform', 'application_id'];
 }
