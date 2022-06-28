@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Notifications;
-namespace App\Channels;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\NexmoMessage;
 
-class SMSNotification extends Notification
+class EmailNotification extends Notification
 {
     use Queueable;
 
@@ -36,9 +34,7 @@ class SMSNotification extends Notification
      */
     public function via($notifiable)
     {
-       // return ['nexmo'];
-        return [NexmoSmsChannel::class];
-
+        return ['mail'];
     }
 
     /**
@@ -47,7 +43,14 @@ class SMSNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-   
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+                    ->greeting($this->project['greeting'])
+                    ->line($this->project['body'])
+                    ->action($this->project['actionText'], $this->project['actionURL'])
+                    ->line($this->project['thanks']);
+    }
 
     /**
      * Get the array representation of the notification.
@@ -55,20 +58,7 @@ class SMSNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    
-
-    /**
-     * Get the Nexmo / SMS representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return NexmoMessage
-     */
-    public function toNexmo($notifiable)
-    {
-        return (new NexmoMessage)
-                    ->content($this->project['greeting'] . ' ' . $this->project['body']);
-                    
-    }
+   
 
     /**
      * Get the array representation of the notification.

@@ -10,7 +10,9 @@ use DB,Auth,file;
 use App\Vacancy;
 use App\Notifications\SMSNotification;
 use Notification;
-
+use App\Notifications\EmailNotification;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApplicationStatus;
 
 class ApplicationController extends Controller
 {
@@ -222,10 +224,16 @@ class ApplicationController extends Controller
 
         ]);
 
-        $this->send($application);
+        $user = DB::table('users')
+        ->join('applicants','applicants.user_id', '=', 'users.id')
+        ->select('users.id as uid','users.name as name','users.email as email', 'applicants.id as id', 'applicants.phone_number as phone_number')
+        ->where('applicants.id',$application->applicant_id)
+        ->first();
+
+        Mail::to($user->email)->send(new ApplicationStatus($application));
 
         return redirect()->route('applications.index')
-        ->with('toast_success','Application updated successfully.');
+        ->with('toast_success','Application status updated successfully.');
     }
 
     /**
@@ -274,12 +282,12 @@ class ApplicationController extends Controller
         return view('applications.create' , compact('vacancy'));
         
     }
-
-    public function send($application)
+/*
+    public function send($application )
     {//dd($application);
         $user = DB::table('users')
         ->join('applicants','applicants.user_id', '=', 'users.id')
-        ->select('users.id as uid', 'applicants.id as id', 'applicants.phone_number as phone_number')
+        ->select('users.id as uid','users.name as name','users.email as email', 'applicants.id as id', 'applicants.phone_number as phone_number')
         ->where('applicants.id',$application->applicant_id)
         ->first();
     	//$user = User::first();
@@ -290,18 +298,33 @@ class ApplicationController extends Controller
   //  $std->phone_number;
    //$std->project = $project;
 
-        $project = [
-            'greeting' => 'Hi ',
-            'body' => 'Your status of job application has been updated. Login to Moms Recruitment to view it.',
-        ];
+     //   $project = [
+       //     'greeting' => 'Hi '.$user->name.',',
+         //   'body' => 'Your status of job application has been updated. Login to Moms Recruitment to view it.',
+        //];
 
       //dd($user);
-       // dd($project);
-     Notification::send($user, new SMSNotification($project));
-       //Notification::send('nexmo', $user->phone_number)->notify(new SMSNotification($project));
+       //dd($project);
+
+   // Notification::send($user, new SMSNotification($project));
+   //   Notification::route('nexmo', $project)->notify(new SMSNotification($project));
+
+   // dd( Notification::route('nexmo', $project)->notify(new SMSNotification($project)));
+       //  dd('Notification sent!');
+      //   return back()->with('status', 'A text message has been sent!');;
+     
+ // Notification::send($user, new EmailNotification($project));
+//  $user->notify(new EmailNotification($project));
+
+//$application['email'] = $request->get('email');
+
+    //Mail::to($application['email'])->send(new ApplicationStatus($application));\
+
+    Mail::to($input['email'])->send(new ApplicationStatus($application));
 
 
-         dd('Notification sent!');
-
+    dd('Notification sent!');
     }
+
+    */
 }

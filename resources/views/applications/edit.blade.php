@@ -61,7 +61,7 @@
     function submitForm(form) {
         swal({
             title: "Are you sure?",
-            text: "This form will be submitted",
+            text: "This form will be submitted and an email notification will be send to the applicant",
             icon: "warning",
             buttons: true,
             dangerMode: true,

@@ -8,6 +8,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Applicant extends Model
 {
+    use Notifiable;
+    use \Illuminate\Notifications\Notifiable;
+
 
     public $table ="applicants";
 
