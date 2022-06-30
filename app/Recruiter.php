@@ -10,11 +10,11 @@ class Recruiter extends Model
 
     protected $fillable = ['user_id', 'branch_id', 'manager_id',];
 
-    public function recruiters()
+   /* public function recruiters()
     {
         return $this->hasMany(Recruiter::class, 'manager_id');
     }
-
+*/
     // recursive relationship
     public function childRecruiters()
     {

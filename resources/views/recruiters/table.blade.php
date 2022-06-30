@@ -59,13 +59,15 @@ td {
             <td>{{ $r->name }}</td>
             <td>{{ $r->location }}</td>
             <td>
+            
+            @if($manager = !null)
+
                 <form action="{{ route('recruiters.destroy',$r->id) }}" method="POST">
        
-   
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>@endif
                 </form>
             </td>
         </tr>

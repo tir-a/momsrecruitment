@@ -18,43 +18,61 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-       
+        if (Auth::User()->role == 'recruiter'){
+
         $branch = DB::table('users')
              ->join('recruiters','recruiters.user_id', '=', 'users.id')
              ->join('branches','recruiters.branch_id', '=', 'branches.id')
              ->where('users.id',$user->id)
-             ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password','branches.location as location')->get();
+             ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password',
+                      'branches.location as location', 'recruiters.manager_id')->first();
+           // dd($branch->manager_id);
+     //  $result = Recruiter::with('childRecruiters')->get();
 
         $manager = DB::table('users')
              ->join('recruiters','recruiters.user_id', '=', 'users.id')
              ->join('branches','recruiters.branch_id', '=', 'branches.id')
-             ->select('users.name as name','branches.location as location')->first();//retrieve nama mgr
-             
+           ->where('recruiters.id',$branch->manager_id)
+             ->select('users.name as name','branches.location as location')
+             ->get();//retrieve nama mgr
+
+        return view('users.show', compact('user', 'branch', 'manager'));
+        }
+        
+        else if (Auth::User()->role=="applicant"){
+
         $applicant = DB::table('users')
               ->join('applicants','applicants.user_id', '=', 'users.id')
               ->where('users.id',$user->id)
               ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth', 'applicants.address as address', 'applicants.phone_number as phone_number')->get();
 
-        return view('users.show', compact('user', 'branch', 'applicant', 'manager'));
-
+        return view('users.show', compact('user', 'applicant'));
+        }
     }
 
     public function edit(User $user)
     {
-        
+        if (Auth::User()->role == 'recruiter'){
+
        $branch=DB::select('select * from branches');
        $manager = DB::table('recruiters')
                     ->join('users','recruiters.user_id', '=', 'users.id')
                     ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password','recruiters.id as id', 'users.name as name')
                     ->where('users.id', '<>', $user->id)->get();
 
+        return view('users.edit',compact('branch', 'user', 'manager'));
+       }
+
+       else if (Auth::User()->role=="applicant"){
+
        $applicant = DB::table('users')
        ->join('applicants','applicants.user_id', '=', 'users.id')
        ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth', 'applicants.address as address', 'applicants.phone_number as phone_number')
        ->where('users.id', '=', $user->id)->get();
 
-       return view('users.edit',compact('branch', 'user', 'manager', 'applicant'));//tambah applicant
-    
+       return view('users.edit',compact('user','applicant'));//tambah applicant
+       }
+
     }
 
     /**
@@ -72,53 +90,62 @@ class UserController extends Controller
             'password'=>'required',
         ]);
        // dd($request->branch_id);
-//dd($request->role);
+       //dd($request->role);
         if (Auth::User()->role == 'recruiter'){
 
       //  $user->update($request->all());
 
         $manager_id = DB::table('recruiters')
-        ->select('id')
-        ->where('id', '=', $request->manager_id)->first()->id;
-     // dd($user->id);
+        //->select('id')
+        ->where('id', '=', $request->manager_id)->first();
+       // dd($manager_id);
 
-     DB::table('users')
-     ->where('id',$user->id)
-      ->update([
-          'name' => $request->name,
-          'email' => $request->email,
-          'password'=>$request->password,
-
-  ]);
-        DB::table('recruiters')
-           ->where('user_id',$user->id)
+            DB::table('users')
+            ->where('id',$user->id)
             ->update([
-                'branch_id' => $request->branch_id,
-                'manager_id' => $manager_id,
-        ]);
-       // dd("test");
+                'name' => $request->name,
+                'email' => $request->email,
+                'password'=>$request->password,
+            ]);
+            
+            if (!empty($manager_id)) { 
+                
+                $manager = $manager_id->id;
+            } 
+                
+                else { 
+                    
+                    $manager = null;
+                }
 
+            DB::table('recruiters')
+            ->where('user_id',$user->id)
+                ->update([
+                    'branch_id' => $request->branch_id,
+                    'manager_id' => $manager,
+                ]);
+      
         }
+
         else if (Auth::User()->role=="applicant"){
 
             //$user->update($request->all());
             DB::table('users')
-     ->where('id',$user->id)
-      ->update([
-          'name' => $request->name,
-          'email' => $request->email,
-          'password'=>$request->password,
+                ->where('id',$user->id)
+                ->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password'=>$request->password,
+                ]);
 
-  ]);
             DB::table('applicants')
-            ->where('user_id',$user->id)
-            ->update([
-                'gender' => $request->gender,
-                'date_of_birth' => $request->date_of_birth,
-                'address' => $request->address,
-                'phone_number' => $request->phone_number,
-        
-            ]);
+                ->where('user_id',$user->id)
+                ->update([
+                    'gender' => $request->gender,
+                    'date_of_birth' => $request->date_of_birth,
+                    'address' => $request->address,
+                    'phone_number' => $request->phone_number,
+                ]);
         }  
         return redirect('users/'.$user->id.'');
     }
@@ -141,6 +168,5 @@ class UserController extends Controller
         return redirect()->route('login')
         ->with('success');
     }
-
 
 }

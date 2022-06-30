@@ -33,9 +33,7 @@
                       <h6 class="mb-0">Branch</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        @foreach ( $branch as $branch )
                                 {{ $branch->location }}
-                        @endforeach
                     </div>
                   </div>
                   <hr>
@@ -44,7 +42,9 @@
                       <h6 class="mb-0">Manager</h6>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                                {{ $manager->name }}
+                          @foreach( $manager as $key => $mgr )
+                                {{ $mgr->name }}
+                          @endforeach
                         </div>
                     </div>
                     </div>
