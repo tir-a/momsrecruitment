@@ -3,7 +3,7 @@
 
 <div class="container-xl px-4 mt-4" align="center">
           <div class="col-xl-8 text-left" >
-          <center><h2>Edit Branch</h2></center>
+          <center><h2>Update Branch</h2></center>
 
             <!-- Account details card-->
             <div class="card mb-4">
@@ -30,7 +30,15 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Location:</strong>
-                    <input type="text" name="location" value="{{ $branch->location }}" class="form-control" placeholder="Location">
+                    <input type="text" name="location" value="{{ $branch->location }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <strong>Address:</strong>
+                    <textarea rows="5" cols="50" name="b_address" class="form-control">{{ old('b_address', $branch->b_address) }}</textarea>
+                </div>
+                <div class="form-group">
+                    <strong>Contact No:</strong>
+                    <input type="text" name="contact" value="{{ $branch->contact }}" class="form-control">
                 </div>
             </div>
     

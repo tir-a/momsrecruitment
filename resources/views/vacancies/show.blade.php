@@ -32,7 +32,11 @@
                       <div class="form-group">
                         <strong>Qualification:</strong>
                         {!! $vacancy->qualification !!}
-                      </div>                    
+                      </div>
+                      <div class="form-group">
+                        <strong>Qualification:</strong>
+                        {!! $vacancy->add_detail !!}
+                      </div>                       
                       <div class="form-group">
                         <strong>Status:</strong>
                         <input type="text" name="status" value="{{ $vacancy->status }}" class="form-control" readonly />
@@ -91,15 +95,20 @@
 <span class="text">{{ $branch->location }} </span>
 
 <div class="Job-Description">
-<h4>Description</h4><p>{!! $branch->description !!}</p>
+<h4>Description</h4>
+<p>{!! $branch->description !!}</p>
 
-<h4>Requirement</h4><p>{!! $branch->requirement  !!} </p>
+<h4>Requirement</h4>
+<p>{!! $branch->requirement  !!}</p>
 
 <h4>Qualification</h4>
 <p>{!! $branch->qualification !!}</p>
 
-</div>@endforeach
+<h4>Additional Detail</h4>
+<p>{!! $branch->add_detail !!}</p>
 
+</div>
+@endforeach
 </div>
 </div>
 </section>
@@ -139,12 +148,17 @@
 <span class="text">{{ $branch->location }} </span>
 
 <div class="Job-Description">
-<h4>Description</h4><p>{!! $branch->description !!}</p>
+<h4>Description</h4>
+<p>{!! $branch->description !!}</p>
 
-<h4>Requirement</h4><p>{!! $branch->requirement  !!} </p>
+<h4>Requirement</h4>
+<p>{!! $branch->requirement  !!} </p>
 
 <h4>Qualification</h4>
 <p>{!! $branch->qualification !!}</p>
+
+<h4>Additional Detail</h4>
+<p>{!! $branch->add_detail !!}</p>
 
 </div>
 </div>

@@ -8,5 +8,5 @@ class Branch extends Model
 {
     public $table ="branches";
 
-    protected $fillable = ['location'];
+    protected $fillable = ['location','b_address','contact'];
 }

@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <strong>Zoom Platform:</strong>
-                <input type="url" class="form-control" name="platform" value="{{ $interview->platform }}" readonly/>
+                <input type="url" class="form-control" name="platform" value="{{ $interview->platform }}" required>
             </div>
             <div class="form-group">
                 <strong>Confirmation Status:</strong>

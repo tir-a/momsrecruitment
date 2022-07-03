@@ -39,7 +39,7 @@
 <i class="large material-icons">assignment</i>
 <span class="text font-size"> Date:  {{ $iv -> date }} </span>
 <div class="float-right margin-top text-align-center">
-<a href="{{ route('interviews.show' , $iv->id)  }}" class="btn btn-info">View</a><br><br>
+<a href="{{ route('interviews.show' , $iv->id)  }}" class="btn btn-primary">View</a><br><br>
 </div>
 </div>
 </div>
@@ -71,30 +71,32 @@
 
 
 @elseif(Auth::User()->role == 'recruiter')
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+@endsection
 @section('content')
 
-
 <style>
-#applications {
+#interviews {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-#applications td, #applications th {
+#interviews td, #applications th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#applications tr:nth-child(even){background-color: #f2f2f2;}
+#interviews tr:nth-child(even){background-color: #f2f2f2;}
 
-#applications tr:hover {background-color: #ddd;}
+#interviews tr:hover {background-color: #ddd;}
 
-#applications th {
+#interviews th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #B0C4DE;
+  background-color:#2C3E50;
   color: white;
 }
 td {
@@ -106,11 +108,13 @@ td {
 <body>
 <div class="row">
         <div class="col-lg-11 margin-tb">
-        <div align="center" style="font-family: Calibri">
+        <div align="center" style="font-family: Verdana">
                 <h2>List of Interviews</h2>
             </div>
-            <div class="pull-right" align="right">
+            <div class="pull-right">
+              <span style="margin-left:1075px;">
                 <a class="btn btn-success" href="{{ route('interviews.create') }}" > Add New Interview</a><br/>
+              </span>
             </div>
         </div>
     </div>
@@ -121,16 +125,18 @@ td {
         </div>
     @endif
     <center>
-    <table class="table table-bordered"  id="applications" style="width: 84%;">
+    <table class="table table-bordered"  id="interviews">
+      <thead>
         <tr>
-            <th class="text-center">Vacancy ID</th>
-            <th class="text-center">Application ID</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Time</th>
-            <th class="text-center">Confirmation Status</th>
-            <th class="text-center" width="280px">Action</th>
+            <th class="text-center" style="font-family: Consolas">Vacancy ID</th>
+            <th class="text-center" style="font-family: Consolas">Application ID</th>
+            <th class="text-center" style="font-family: Consolas">Date</th>
+            <th class="text-center" style="font-family: Consolas">Time</th>
+            <th class="text-center" style="font-family: Consolas">Confirmation Status</th>
+            <th class="text-center" style="font-family: Consolas" width="280px">Action</th>
         </tr>
-
+      </thead>
+      <tbody>
         @foreach ($interviews as $iv)
         <tr>
             <td>{{ $iv->v_id }}</td>
@@ -143,7 +149,7 @@ td {
    
                 <a class="btn btn-info" href="{{ route('interviews.show',$iv->id) }}">View</a>
     
-                <a class="btn btn-primary" href="{{ route('interviews.edit',$iv->id) }}">Edit</a>
+                <a class="btn btn-warning" href="{{ route('interviews.edit',$iv->id) }}">Edit</a>
  
    
                     @csrf
@@ -153,6 +159,7 @@ td {
                 </form>
             </td>
         </tr>
+       </tbody>
         @endforeach
     </table></center>
     </body>
@@ -183,5 +190,13 @@ td {
    
 
 @endsection
-
+@push('scripts')
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#interviews').DataTable();
+        });
+    </script>
+@endpush
 @endif

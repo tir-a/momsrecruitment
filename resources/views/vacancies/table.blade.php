@@ -2,8 +2,12 @@
 @auth
 @if(Auth::User()->role == 'recruiter')
 @extends('layouts.template')
-@section('content')
 
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+@endsection
+@section('content')
+<head>
 <style>
 #vacancies {
   font-family: Arial, Helvetica, sans-serif;
@@ -24,7 +28,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #B0C4DE;
+  background-color: #2C3E50;
   color: white;
 }
 td {
@@ -32,16 +36,16 @@ td {
 }
 
 </style>
-
+</head>
 <body>
 <div class="row">
         <div class="col-lg-11 margin-tb">
-        <div align="center" style="font-family: Calibri">
+        <div align="center" style="font-family: Verdana">
                 <h2>List of Job Vacancies</h2>
             </div>
-            <div class="pull-right" align="right">
+            <span style="margin-left:1063px;">
                 <a class="btn btn-success" href="{{ route('vacancies.create') }}" > Add New Job Vacancy</a><br/>
-            </div>
+            </span>
         </div>
     </div>
    <br>
@@ -51,15 +55,18 @@ td {
         </div>
     @endif
     <center>
-    <table class="table table-bordered"  id="vacancies" style="width: 84%;">
+    <table class="table table-bordered"  id="vacancies">
+      <thead>
         <tr>
-            <th class="text-center">ID</th>
-            <th class="text-center">Position</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Closing Date</th>
-            <th class="text-center" width="280px">Action</th>
+            <th class="text-center" style="font-family: Consolas">ID</th>
+            <th class="text-center" style="font-family: Consolas">Position</th>
+            <th class="text-center" style="font-family: Consolas">Status</th>
+            <th class="text-center" style="font-family: Consolas">Quantity</th>
+            <th class="text-center" style="font-family: Consolas">Closing Date</th>
+            <th class="text-center" style="font-family: Consolas" width="280px">Action</th>
         </tr>
+      </thead>
+      <tbody>
         @foreach ($branches as $branch)
         <tr>
             <td>{{ $branch->id }}</td>
@@ -72,15 +79,16 @@ td {
    
                   <a class="btn btn-info" href="{{ route('vacancies.show',$branch->id) }}">View</a>
     
-                    <a class="btn btn-primary" href="{{ route('vacancies.edit',$branch->id) }}">Edit</a>
+                    <a class="btn btn-warning" href="{{ route('vacancies.edit',$branch->id) }}">Edit</a>
    
                     @csrf
                     @method('DELETE')
       
-                    <a href="#" class="btn btn-danger delete">Delete</button>
+                    <button type="submit" class="btn btn-danger" >Delete</button>
                 </form>
             </td>
         </tr>
+      </tbody>
         @endforeach
     </table></center>
     </body>
@@ -109,6 +117,15 @@ td {
     </script>
 
 @endsection
+@push('scripts')
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#vacancies').DataTable();
+        });
+    </script>
+@endpush
 
 @elseif(Auth::User()->role == 'applicant')
 @include('partial.topbar')
@@ -142,10 +159,10 @@ td {
 <div class="vertical-space-85"></div>
 <div class="container text-center" style="width:800px; margin:0 auto;">
 <section id="resent-job-post" class="background-color-white-drak">
-<div class="vertical-space-55"></div>
+<div class="vertical-space-65"></div>
 
 <div class="col-lg-12 col-md-12">
-<h3 class="title">Job Vacancy List</h3><br><br>
+<h3 class="title">List of Job Vacancies</h3><br><br>
 
 @if ($message = Session::get('success'))
         <div class="alert alert-success">

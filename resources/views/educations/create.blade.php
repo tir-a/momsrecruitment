@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h3><strong>Education Details</strong></h3>
+            <h3><strong>Add New Education</strong></h3>
         </div>
     </div>
 </div>

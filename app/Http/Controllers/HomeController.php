@@ -43,7 +43,16 @@ class HomeController extends Controller
          'vacancies.date_close as date_close', 'vacancies.recruiter_id as recruiter_id')
          ->where('user_id', '=', Auth::User()->id)->count();
 
-        return view('home', compact('applications', 'vacancies'));
+         $interviews = DB::table('vacancies')
+         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
+         ->join('interviews','interviews.application_id', '=', 'applications.id')
+         ->join('recruiters','applications.recruiter_id', '=', 'recruiters.id')
+         ->join('users', 'users.id', '=', 'recruiters.user_id')
+         ->select('vacancies.position as position', 'applications.app_status as app_status', 
+                   'applications.date_apply as date_apply', 'applications.id as id', 'interviews.id as ivid')
+         ->where('user_id', '=', Auth::User()->id)->count();
+
+        return view('home', compact('applications', 'vacancies', 'interviews'));
     }
 
     public function contact()

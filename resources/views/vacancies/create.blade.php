@@ -3,7 +3,7 @@
 
 <div class="container-xl px-4 mt-4" align="center">
           <div class="col-xl-8 text-left" >
-          <center><h2>New Job Vacancy</h2></center>
+          <center><h2>Add New Job Vacancy</h2></center>
 
             <!-- Account details card-->
             <div class="card mb-4">
@@ -29,19 +29,23 @@
         <div class="col-xs-6 col-sm-6 col-md-12">
             <div class="form-group">
                 <strong>Position:</strong>
-                <input type="text" name="position" class="form-control" placeholder="Position">
+                <input type="text" name="position" class="form-control" placeholder="Position" required>
             </div>
             <div class="form-group">
                 <strong>Description:</strong>
-                <textarea rows="6" cols="50"  class="form-control" id="mySummernote1" name="description"  style="white-space: pre-wrap;" placeholder="Description" ></textarea>
+                <textarea rows="6" cols="50"  class="form-control" id="mySummernote1" name="description"  style="white-space: pre-wrap;" placeholder="Description" required></textarea>
             </div>
             <div class="form-group">
                 <strong>Requirement:</strong>
-                <textarea rows="4" cols="50"  class="form-control" id="mySummernote2" name="requirement"  placeholder="Requirement" ></textarea>
+                <textarea rows="4" cols="50"  class="form-control" id="mySummernote2" name="requirement"  placeholder="Requirement" required></textarea>
             </div>
             <div class="form-group">
                 <strong>Qualification:</strong>
-                <textarea rows="4" cols="50"  class="form-control" id="mySummernote3" name="qualification"  placeholder="Qualification" ></textarea>
+                <textarea rows="4" cols="50"  class="form-control" id="mySummernote3" name="qualification"  placeholder="Qualification" required></textarea>
+            </div>
+            <div class="form-group">
+                <strong>Additional Detail:</strong>
+                <textarea rows="4" cols="50"  class="form-control" id="mySummernote4" name="add_detail"  placeholder="Additional Detail" required></textarea>
             </div>
             <div class="form-group">
                 <strong>Status:</strong>
@@ -52,12 +56,12 @@
                 </select>
             </div>
             <div class="form-group">
-                <strong>Quantity:</strong>
-                <input type="number" min="0" onkeypress="return isNumberKey(event)" name="quantity" class="form-control" placeholder="Quantity">
+                <strong>No of Availability:</strong>
+                <input type="number" min="0" onkeypress="return isNumberKey(event)" name="quantity" class="form-control" placeholder="No of Availability" required>
             </div>
             <div class="form-group">
                 <strong>Closing date:</strong>
-                <input type="date" class="form-control" min="<?php echo date("Y-m-d"); ?>" name="date_close"  placeholder="Closing date" >
+                <input type="date" class="form-control" min="<?php echo date("Y-m-d"); ?>" name="date_close"  placeholder="Closing date" required>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

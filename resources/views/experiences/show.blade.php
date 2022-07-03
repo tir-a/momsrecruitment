@@ -25,7 +25,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Position Level" style="border:none" readonly />
-<input type="text" class="form-control" id="certificate" name="certificate" value="{{  $experience->job_level  }}" readonly />
+<input type="text" class="form-control" id="job_level" name="job_level" value="{{  $experience->job_level  }}" readonly />
 </div>
 </div>
 </div>
@@ -33,13 +33,13 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Specialization" style="border:none" readonly />
-<input type="text" class="form-control" id="institution" name="institution" value="{{  $experience->specialization  }}" readonly />
+<input type="text" class="form-control" id="specialization" name="specialization" value="{{  $experience->specialization  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Company" style="border:none" readonly />
-<input type="text" class="form-control" id="field_study" name="field_study" value="{{  $experience->company  }}" readonly />
+<input type="text" class="form-control" id="company" name="company" value="{{  $experience->company  }}" readonly />
 </div>
 </div>
 </div>
@@ -47,30 +47,32 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Date Joined" style="border:none" readonly />
-<input type="text" class="form-control" id="" name="grad_year" value="{{ $experience->date_joined  }}" readonly />
+<input type="text" class="form-control" id="date_joined" name="date_joined" value="{{ $experience->date_joined  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Years in Position" style="border:none" readonly />
-<input type="text" class="form-control" id="grade" name="grade" value="{{  $experience->working_year  }}" readonly />
+<input type="text" class="form-control" id="working_year" name="working_year" value="{{  $experience->working_year  }}" readonly />
 </div>
 </div>
 </div>
 <div class="form-group">
 <input type="text" class="form-control" placeholder="Detail" style="border:none" readonly />
-<input type="text"  class="form-control" id="detail" name="detail" value="{{ $experience->detail  }}" readonly/>
+<textarea rows="4" cols="50"  class="form-control" placeholder="{{ $experience->detail }}" readonly /></textarea>
 </div>
 <br>
 <div class="row">    
 <div class="col-6 d-flex text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
-     <a class="btn btn-primary" href="{{ route('experiences.edit',$experience->id) }}">Edit</a>&nbsp;
+     <a class="btn btn-warning" href="{{ route('experiences.edit',$experience->id) }}">Edit</a>&nbsp;
+     @if ($applications->isEmpty())
       <form action="{{ route('experiences.destroy',$experience->id) }}" method="POST">
            @csrf
            @method ('DELETE')
      <a> <button type="submit" class="btn btn-danger" >Delete</button></a>
      </form>
+     @endif
 </div>
 
 </div>

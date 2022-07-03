@@ -3,7 +3,7 @@
 
 <div class="container-xl px-4 mt-4" align="center">
           <div class="col-xl-10 text-left" >
-          <center><h2>Edit Job Vacancy</h2></center>
+          <center><h2>Update Job Vacancy</h2></center>
 
             <!-- Account details card-->
             <div class="card mb-4">
@@ -29,19 +29,23 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                 <strong>Position:</strong>
-                <input type="text" name="position" value="{{ $vacancy->position }}" class="form-control">
+                <input type="text" name="position" value="{{ $vacancy->position }}" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <strong>Description:</strong>
-                    <textarea rows="6" cols="50" name="description" id="mySummernote1" class="form-control">{{ old('description', $vacancy->description) }}</textarea>
+                    <textarea rows="6" cols="50" name="description" id="mySummernote1" class="form-control" required>{{ old('description', $vacancy->description) }}</textarea>
                 </div>
                 <div class="form-group">
                     <strong>Requirement:</strong>
-                    <textarea rows="4" cols="50" name="requirement" id="mySummernote2" class="form-control" >{{ old('requirement', $vacancy->requirement) }}</textarea>
+                    <textarea rows="4" cols="50" name="requirement" id="mySummernote2" class="form-control" required>{{ old('requirement', $vacancy->requirement) }}</textarea>
                 </div>
                 <div class="form-group">
                     <strong>Qualification:</strong>
-                    <textarea rows="4" cols="50" name="qualification" id="mySummernote3" class="form-control">{{ old('qualification', $vacancy->qualification) }}</textarea>
+                    <textarea rows="4" cols="50" name="qualification" id="mySummernote3" class="form-control" required>{{ old('qualification', $vacancy->qualification) }}</textarea>
+                </div>
+                <div class="form-group">
+                    <strong>Additional Detail:</strong>
+                    <textarea rows="4" cols="50" name="add_detail" id="mySummernote4" class="form-control" required>{{ old('add_detail', $vacancy->add_detail) }}</textarea>
                 </div>
                 <div class="form-group">
                     <strong>Status:</strong>
@@ -52,12 +56,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <strong>Quantity:</strong>
-                    <input type="number" min="0" onkeypress="return isNumberKey(event)" name="quantity" value="{{ $vacancy->quantity }}" class="form-control">
+                    <strong>No of Availability:</strong>
+                    <input type="number" min="0" onkeypress="return isNumberKey(event)" name="quantity" value="{{ $vacancy->quantity }}" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <strong>Closing date:</strong>
-                    <input type="date" name="date_close"  value="{{ $vacancy->date_close }}" class="form-control">
+                    <input type="date" name="date_close"  value="{{ $vacancy->date_close }}" class="form-control" required>
                 </div>
             </div>
     

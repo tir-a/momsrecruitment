@@ -41,13 +41,13 @@
 <div class="media display-inline text-align-center">
 <div class="media-body text-left text-align-center">
 <h6><a href="#" class="font-color-black"> </a></h6>
-<i class="large material-icons">account_balance</i>
+<i class="large material-icons">assignment_ind</i>
 <span class="text">  Position: {{ $ex->job }} </span>
 <br /><br>
-<i class="large material-icons">assignment</i>
+<i class="large material-icons">business</i>
 <span class="text font-size"> Company Name: {{ $ex->company }} </span>
 <div class="float-right margin-top text-align-center">
-<a href="{{ route('experiences.show' , $ex->id)  }}" class="btn btn-info">View</a><br><br>
+<a href="{{ route('experiences.show' , $ex->id)  }}" class="btn btn-primary">View</a><br><br>
 </div>
 </div>
 </div>

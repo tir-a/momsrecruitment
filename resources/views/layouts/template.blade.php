@@ -4,7 +4,9 @@
 @if(Auth::User()->role == 'recruiter')
 @include('partial.topbar')
 @include('partial.sidebar')
-  
+<head>
+  @yield('css')
+</head>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
@@ -93,13 +95,14 @@
 <script>
     $(document).ready(function() {
         $("#mySummernote1").summernote();
-                $("#mySummernote2").summernote();
-                $("#mySummernote3").summernote();
-
+        $("#mySummernote2").summernote();
+        $("#mySummernote3").summernote();
+        $("#mySummernote4").summernote();
         $('.dropdown-toggle').dropdown();
     });
 </script>
 
+    @stack('scripts')
 </body>
 </html>
 

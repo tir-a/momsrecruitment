@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Branch;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class BranchController extends Controller
 {
@@ -17,6 +18,7 @@ class BranchController extends Controller
     {
         $branches = Branch::all();
         //dd('branches');
+
         return view('branches.index', compact('branches') );
     }
 
@@ -40,6 +42,9 @@ class BranchController extends Controller
     {
         $request->validate([
             'location'=>'required',
+            'b_address'=>'required',
+            'contact'=>'required',
+
         ]);
          //  DB::table('branches')->insert([
         //    'location'=>$request->location,
@@ -70,6 +75,7 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
+
         return view('branches.edit', compact('branch') );
     }
 
@@ -84,6 +90,9 @@ class BranchController extends Controller
     {
         $request->validate([
             'location'=>'required',
+            'b_address'=>'required',
+            'contact'=>'required',
+
         ]);
         $branch->update($request->all());
 

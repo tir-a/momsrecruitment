@@ -77,6 +77,7 @@ class VacancyController extends Controller
             'description'=>'required',
             'requirement'=>'required',
             'qualification'=>'required',
+            'add_detail'=>'required',
             'status'=>'required',
             'quantity'=>'required',
             'date_close'=>'required',
@@ -92,6 +93,7 @@ class VacancyController extends Controller
                     'description'=> $request->description,
                     'requirement'=> $request->requirement,
                     'qualification'=> $request->qualification,
+                    'add_detail'=> $request->add_detail,
                     'status'=> $request->status,
                     'quantity'=> $request->quantity,
                     'date_close'=> $request->date_close,
@@ -114,7 +116,7 @@ class VacancyController extends Controller
         ->join('recruiters','recruiters.branch_id', '=', 'branches.id')
         ->join('vacancies','vacancies.recruiter_id', '=', 'recruiters.id')
         ->select('branches.id as branch_id', 'branches.location as location', 'vacancies.id as id', 'vacancies.description as description',   'vacancies.requirement as requirement',  'vacancies.qualification as qualification',
-         'vacancies.position as position', 'vacancies.status as status', 'vacancies.quantity as quantity', 'vacancies.date_close as date_close', 'vacancies.recruiter_id as recruiter_id')
+         'vacancies.position as position', 'vacancies.add_detail as add_detail','vacancies.status as status', 'vacancies.quantity as quantity', 'vacancies.date_close as date_close', 'vacancies.recruiter_id as recruiter_id')
         ->where('vacancies.id', '=', $vacancy->id)->get();
 
         return view('vacancies.show', compact('vacancy', 'branches') );
@@ -145,6 +147,7 @@ class VacancyController extends Controller
             'description'=>'required',
             'requirement'=>'required',
             'qualification'=>'required',
+            'add_detail'=>'required',
             'status'=>'required',
             'quantity'=>'required',
             'date_close'=>'required',

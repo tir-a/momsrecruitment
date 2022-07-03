@@ -39,7 +39,7 @@
 <i class="large material-icons">assignment</i>
 <span class="text font-size"> Application Status: {{ $apps -> app_status }} </span>
 <div class="float-right margin-top text-align-center">
-<a href="{{ route('applications.show' , $apps->id)  }}" class="btn btn-info">View</a><br><br>
+<a href="{{ route('applications.show' , $apps->id)  }}" class="btn btn-primary">View</a><br><br>
 </div>
 </div>
 </div>
@@ -71,8 +71,12 @@
 
 
 @elseif(Auth::User()->role == 'recruiter')
-@section('content')
 
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+@endsection
+
+@section('content')
 
 <style>
 #applications {
@@ -94,7 +98,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #B0C4DE;
+  background-color:#2C3E50;
   color: white;
 }
 td {
@@ -106,7 +110,7 @@ td {
 <body>
 <div class="row">
         <div class="col-lg-11 margin-tb">
-        <div align="center" style="font-family: Calibri">
+        <div align="center" style="font-family: Verdana">
                 <h2>List of Job Applications</h2>
             </div>
         </div>
@@ -118,14 +122,17 @@ td {
         </div>
     @endif
     <center>
-    <table class="table table-bordered"  id="applications" style="width: 84%;">
+    <table class="table table-bordered"  id="applications">
+      <thead>
         <tr>
-            <th class="text-center">ID</th>
-            <th class="text-center">Position</th>
-            <th class="text-center">Applied Date</th>
-            <th class="text-center">Status</th>
-            <th class="text-center" width="280px">Action</th>
+            <th class="text-center"  style="font-family: Consolas">ID</th>
+            <th class="text-center"  style="font-family: Consolas">Position</th>
+            <th class="text-center"  style="font-family: Consolas">Applied Date</th>
+            <th class="text-center"  style="font-family: Consolas">Status</th>
+            <th class="text-center"  style="font-family: Consolas" width="280px">Action</th>
         </tr>
+      </thead>
+      <tbody>
         @foreach ($applications as $apps)
         <tr>
             <td>{{ $apps->id }}</td>
@@ -137,7 +144,7 @@ td {
    
                   <a class="btn btn-info" href="{{ route('applications.show',$apps->id) }}">View</a>
     
-                    <a class="btn btn-primary" href="{{ route('applications.edit',$apps->id) }}">Edit</a>
+                    <a class="btn btn-warning" href="{{ route('applications.edit',$apps->id) }}">Edit</a>
    
                     @csrf
                     @method('DELETE')
@@ -146,6 +153,7 @@ td {
                 </form>
             </td>
         </tr>
+       </tbody>
         @endforeach
     </table></center>
     </body>
@@ -194,5 +202,13 @@ td {
     </script>
 
 @endsection
-
+@push('scripts')
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#applications').DataTable();
+        });
+    </script>
+@endpush
 @endif

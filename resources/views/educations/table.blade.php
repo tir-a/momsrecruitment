@@ -47,7 +47,7 @@
 <i class="large material-icons">assignment</i>
 <span class="text font-size"> Qualification: {{ $ed -> certificate }}  </span>
 <div class="float-right margin-top text-align-center">
-<a href="{{ route('educations.show' , $ed->id)  }}" class="btn btn-info">View</a><br><br>
+<a href="{{ route('educations.show' , $ed->id)  }}" class="btn btn-primary">View</a><br><br>
 </div>
 </div>
 </div>

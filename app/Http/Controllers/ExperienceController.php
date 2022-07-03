@@ -85,7 +85,15 @@ class ExperienceController extends Controller
      */
     public function show(Experience $experience)
     {
-        return view('experiences.show', compact('experience') );
+        $applications = DB::table('vacancies')
+        ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
+        ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+        ->join('branches','recruiters.branch_id', '=', 'branches.id')
+        ->select('vacancies.position as position', 'applications.app_status as app_status', 'applications.id as id', 
+                'applications.resume as resume','applications.date_apply as date_apply','branches.location as location' )
+        ->where('applications.id', '=', Auth::User()->id)->get();
+
+        return view('experiences.show', compact('experience', 'applications') );
 
     }
 

@@ -188,7 +188,7 @@ Moms Postnatal Care
   </div>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-light" style="background-color: #F4A460;">
+  <nav class="main-header navbar navbar-expand navbar-light" style="background-color: #EB984E;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -200,7 +200,7 @@ Moms Postnatal Care
       <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
               <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <span class="font-weight-normal"> Account</span></a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown " aria-labelledby="UserDropdown">
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <a class="dropdown-item"> 
                  <a href= "{{route('users.show', ['user' => auth()->user()->id])}}" class="nav-link">
                   <i class="nav-icon fas fa-user"></i>&nbsp;&nbsp;&nbsp;My Profile 

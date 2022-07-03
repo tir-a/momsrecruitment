@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h3><strong>Experience Details</strong></h3>
+            <h3><strong>Add New Experience</strong></h3>
         </div>
        
     </div>
@@ -37,13 +37,13 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="job">Position</label>
-<input type="text" class="form-control" id="job" name="job" placeholder="Position">
+<input type="text" class="form-control" id="job" name="job" placeholder="Position" required>
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="job_level">Position Level</label>
-      <select class="form-control" id="job_level" name="job_level">
+      <select class="form-control" id="job_level" name="job_level" required>
             <option value="">Choose Position Level</option>
             <option value="Senior Manager">Senior Manager</option>
             <option value="Manager">Manager</option>
@@ -58,14 +58,14 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="specialization">Specialization</label>
-      <select class="form-control" id="specialization" name="specialization">
+      <select class="form-control" id="specialization" name="specialization" required>
             <option value="">Choose Specialization Group</option>
             <option value="Admin/Human Resources">Admin/Human Resources</option>
             <option value="Advertising/Media Planning">Advertising/Media Planning</option>
             <option value="Arts/Creative/Graphics Design">Arts/Creative/Graphics Design</option>
             <option value="Accounting/Finance">Accounting/Finance</option>
             <option value="General Work(Driver, etc)">General Work (Driver, etc)</option>
-            <option value="Personal Care/Beauty/Fitness Service">Sales/Marketing</option>
+            <option value="Personal Care/Beauty/Fitness Service">Personal Care/Beauty/Fitness Service</option>
             <option value="Sales/Marketing">Sales/Marketing</option>
             <option value="Services">Services</option>
             <option value="Others">Others</option>
@@ -75,7 +75,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="company">Company</label>
-<input type="text" class="form-control" id="company" name="company" placeholder="Company">
+<input type="text" class="form-control" id="company" name="company" placeholder="Company" required>
 </div>
 </div>
 </div>
@@ -83,13 +83,13 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="date_joined">Date Joined</label>
-<input type="date" class="form-control" id="date_joined" name="date_joined" placeholder="Date Joined">
+<input type="date" class="form-control" id="date_joined" name="date_joined" placeholder="Date Joined" required>
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="working_year">Years in Position</label>
-<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" placeholder="Years in Position">
+<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" placeholder="Years in Position" required>
 </div>
 </div>
 </div>

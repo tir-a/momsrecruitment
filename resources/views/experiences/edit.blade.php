@@ -32,7 +32,7 @@
 <div class="row">
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<label for="certificate">Position level</label>
+<label for="certificate">Position</label>
 <input type="text" class="form-control" id="job" name="job" value="{{  $experience->job }}" required>
 </div>
 </div>
@@ -62,7 +62,7 @@
             <option value="Arts/Creative/Graphics Design" {{($experience->specialization === "Arts/Creative/Graphics Design") ? 'Selected' : ''}}>Arts/Creative/Graphics Design</option>
             <option value="Accounting/Finance" {{($experience->specialization === "Accounting/Finance") ? 'Selected' : ''}}>Accounting/Finance</option>
             <option value="General Work(Driver, etc)" {{($experience->specialization === "General Work(Driver, etc)") ? 'Selected' : ''}}>General Work (Driver, etc)</option>
-            <option value="Personal Care/Beauty/Fitness Service" {{($experience->specialization === "Personal Care/Beauty/Fitness Service") ? 'Selected' : ''}}>Sales/Marketing</option>
+            <option value="Personal Care/Beauty/Fitness Service" {{($experience->specialization === "Personal Care/Beauty/Fitness Service") ? 'Selected' : ''}}>Personal Care/Beauty/Fitness Service</option>
             <option value="Sales/Marketing" {{($experience->specialization === "Sales/Marketing") ? 'Selected' : ''}}>Sales/Marketing</option>
             <option value="Services" {{($experience->specialization === "Services") ? 'Selected' : ''}}>Services</option>
             <option value="Others" {{($experience->specialization === "Others") ? 'Selected' : ''}}>Others</option>
@@ -72,7 +72,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="company">Company</label>
-<input type="text" class="form-control" id="company" name="company" value="{{  $experience->company }}">
+<input type="text" class="form-control" id="company" name="company" value="{{  $experience->company }}" required>
 </div>
 </div>
 </div>
@@ -80,19 +80,19 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="date_joined">Date Joined</label>
-<input type="date" class="form-control" id="date_joined" name="date_joined" value="{{  $experience->date_joined  }}">
+<input type="date" class="form-control" id="date_joined" name="date_joined" value="{{  $experience->date_joined  }}" required>
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="working_year">Years in Position</label>
-<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" name="working_year" value="{{  $experience->working_year  }}">
+<input type="number" min="0" onkeypress="return isNumberKey(event)" name="working_year" class="form-control" name="working_year" value="{{  $experience->working_year  }}" required>
 </div>
 </div>
 </div>
 <div class="form-group">
 <label for="detail">Detail</label>
-<input type="text" class="form-control" id="detail" name="detail" value="{{  $experience->detail }}">
+<textarea rows="10" cols="50"  class="form-control" name="detail" required>{{ old('detail', $experience->detail) }}</textarea>
 </div>
       <div class="col-xs-12 col-sm-12 col-md-12">
                 <a><button type="submit" class="btn btn-success">Submit</button></a>

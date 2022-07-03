@@ -3,7 +3,7 @@
 
 <div class="container-xl px-4 mt-4" align="center">
           <div class="col-xl-8 text-left" >
-          <center><h2>New Branch</h2></center>
+          <center><h2>Add New Branch</h2></center>
 
             <!-- Account details card-->
             <div class="card mb-4">
@@ -30,6 +30,14 @@
             <div class="form-group">
                 <strong>Location:</strong>
                 <input type="text" name="location" class="form-control" placeholder="Location">
+            </div>
+            <div class="form-group">
+                <strong>Address:</strong>
+                <textarea rows="5" cols="50" class="form-control" id="b_address" name="b_address" placeholder="Address"></textarea>
+            </div>
+            <div class="form-group">
+                <strong>Contact:</strong>
+                <input type="text" name="contact" class="form-control" placeholder="Contact">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

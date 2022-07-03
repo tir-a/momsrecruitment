@@ -35,35 +35,35 @@
                             <label class="small mb-1" for="email">Email address</label>
                             <input class="form-control" id="email" type="email" name="email" value="{{ Auth::user()->email }}" required>
                         </div>
-                            <div class="col-md-6">
+                       <!--     <div class="col-md-6">
                                 <label class="small mb-1" for="password">Password</label>
                                 <input class="form-control" id="password" type="password" name="password" value="{{ Auth::user()->password }}" required>
                             </div>
-
-                            <div class="mb-3">
+                        -->
+                            <div class="col-md-6">
                                  <label class="small mb-1" for="location">Branch</label>
                                  <select class="form-control" name="branch_id" required>
                                      <option value="">-- Choose Branch --</option>
                                          @foreach ($branch as $branch)
-                                    <option value="{{$branch->id}}"> {{$branch->location}}-{{$branch->id}}</option>
+                                    <option value="{{$branch->id}}"> {{$branch->location}}</option>
                                          @endforeach
                                  </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="mb-3">
                                 <label class="small mb-1" for="id">Manager</label>
                                 <select class="form-control" name="manager_id">
                                      <option value="">-- Choose Manager --</option>
                                          @foreach ($manager as $manager)
-                                     <option value="{{$manager->id}}"> {{$manager->name}}-{{$manager->id}}</option>
+                                     <option value="{{$manager->id}}"> {{$manager->name}} - {{$manager->location}}</option>
                                          @endforeach
                                 </select>
                             </div>
                             </div>      
                             <button class="btn btn-success" type="submit">Save changes</button>
                         <a class="btn btn-primary" href="javascript:history.back()"> Back</a>
-    </form>
+                     </form>
     
-    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@
 @include('partial.topbar')
     
 <br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <section id="Get-in-Touch">
 <div class="container text-center position-absolute">

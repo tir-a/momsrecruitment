@@ -51,7 +51,7 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                        @enderror
 					</div>
                     <br>            
 					<div class="wrap-input80 validate-input m-b-18" data-validate = "Password is required" style="width:600px; margin:0 auto;">

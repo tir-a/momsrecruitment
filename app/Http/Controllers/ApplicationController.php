@@ -103,6 +103,7 @@ class ApplicationController extends Controller
         ->select('applicants.id as id')
         ->where('users.id', '=', Auth::User()->id)->first()->id;
         
+
         $vacancy = DB::table('vacancies')
         ->select('id')
         ->where('id', '=', $request->vacancy_id)->first()->id;
@@ -113,7 +114,7 @@ class ApplicationController extends Controller
             'date_apply'=> $request->date_apply,
             'app_status'=> 'Pending',
             'applicant_id'=> $applicant,       
-            'vacancy_id'=> $vacancy,       
+            'vacancy_id'=> $vacancy,    
          ]);
 
         return redirect()->route('applications.index')

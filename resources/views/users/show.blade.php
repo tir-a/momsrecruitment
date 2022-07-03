@@ -37,6 +37,8 @@
                     </div>
                   </div>
                   <hr>
+                  @foreach( $manager as $key => $mgr )
+                  @if ($mgr!=null)
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Manager</h6>
@@ -45,15 +47,28 @@
                           @foreach( $manager as $key => $mgr )
                                 {{ $mgr->name }}
                           @endforeach
-                        </div>
+                        </div>                       
                     </div>
                     </div>
                   </div>
+                  @else if ($mgr==null)
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Manager</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                                 None 
+                        </div>                       
+                    </div>
+                    </div>
+                  </div>
+                  @endif
+                  @endforeach
                   <br>
                   <div class="row">
                     <div class="col-6 d-flex justify-content-right text-right">
                      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
-                     <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>&nbsp;
+                     <a class="btn btn-warning" href="{{ route('users.edit',$user->id) }}">Edit</a>&nbsp;
                      <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                        @csrf
                        @method ('DELETE')
@@ -75,7 +90,7 @@
 @include('partial.topbar')
 
 <br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <section id="Get-in-Touch">
 <div class="container text-center position-absolute">
@@ -179,7 +194,7 @@
 <div class="row">    
   <div class="col-6 d-flex justify-content-center text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
-     <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>&nbsp;
+     <a class="btn btn-warning" href="{{ route('users.edit',$user->id) }}">Edit</a>&nbsp;
       <form action="{{ route('users.destroy',$user->id) }}" method="POST">
            @csrf
            @method ('DELETE')
@@ -187,10 +202,9 @@
         </form>
 </div>
 </div>
-
 </div>
 </div>
-<div class="vertical-space-100"></div>
+<div class="vertical-space-50"></div>
 </section>
 
 @endif

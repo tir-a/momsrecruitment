@@ -32,7 +32,7 @@ class UserController extends Controller
         $manager = DB::table('users')
              ->join('recruiters','recruiters.user_id', '=', 'users.id')
              ->join('branches','recruiters.branch_id', '=', 'branches.id')
-           ->where('recruiters.id',$branch->manager_id)
+             ->where('recruiters.id',$branch->manager_id)
              ->select('users.name as name','branches.location as location')
              ->get();//retrieve nama mgr
 
@@ -57,7 +57,8 @@ class UserController extends Controller
        $branch=DB::select('select * from branches');
        $manager = DB::table('recruiters')
                     ->join('users','recruiters.user_id', '=', 'users.id')
-                    ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password','recruiters.id as id', 'users.name as name')
+                    ->join('branches','recruiters.branch_id', '=', 'branches.id')
+                    ->select('users.id as id', 'users.name as name','users.email as email', 'users.password as password','recruiters.id as id', 'users.name as name', 'branches.location as location')
                     ->where('users.id', '<>', $user->id)->get();
 
         return view('users.edit',compact('branch', 'user', 'manager'));
@@ -87,7 +88,6 @@ class UserController extends Controller
         $request->validate([
             'name'=>'required',
             'email'=>'required',
-            'password'=>'required',
         ]);
        // dd($request->branch_id);
        //dd($request->role);
@@ -105,7 +105,6 @@ class UserController extends Controller
             ->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password'=>$request->password,
             ]);
             
             if (!empty($manager_id)) { 
@@ -135,7 +134,6 @@ class UserController extends Controller
                 ->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'password'=>$request->password,
                 ]);
 
             DB::table('applicants')
