@@ -42,7 +42,7 @@
 						Register
 					</span>
 				</div>
-                <form method="POST" action="{{ route('register') }}" class="login100-form validate-form">
+                <form method="POST" action="{{ route('register') }}" class="login100-form validate-form"  onsubmit="return confirm('Are you sure want to submit this form?')">
                         @csrf
 			
                         <div class="wrap-input80 validate-input m-b-26" data-validate="Role is required" style="width:600px; margin:0 auto;">

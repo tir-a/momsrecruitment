@@ -24,7 +24,8 @@ class EducationController extends Controller
         $educations = DB::table('educations')
             ->select('educations.id as id',
             'educations.certificate as certificate', 'educations.institution as institution', 'educations.applicant_id as applicant_id')
-            ->where('applicant_id', '=', $users)->get();
+            ->where('applicant_id', '=', $users)//->get();
+            ->paginate(1);
         //dd('branches');
 
         return view('educations.index', compact('educations') );
@@ -91,13 +92,19 @@ class EducationController extends Controller
      */
     public function show(Education $education)
     {
+        $users = DB::table('users')
+        ->join('applicants','applicants.user_id', '=', 'users.id')
+        ->select('applicants.id as id')
+        ->where('user_id', '=', Auth::User()->id)->first()->id;
+
         $applications = DB::table('vacancies')
         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
-        ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+        ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')        
+        ->join('applicants','applications.applicant_id', '=', 'applicants.id')
         ->join('branches','recruiters.branch_id', '=', 'branches.id')
         ->select('vacancies.position as position', 'applications.app_status as app_status', 'applications.id as id', 
                 'applications.resume as resume','applications.date_apply as date_apply','branches.location as location' )
-        ->where('applications.id', '=', Auth::User()->id)->get();
+        ->where('applicant_id', '=', $users)->get();
 
         return view('educations.show', compact('education','applications') );
 
@@ -156,4 +163,6 @@ class EducationController extends Controller
         return redirect()->route('educations.index')
         ->with('success','Education deleted successfully');
     }
+
+
 }

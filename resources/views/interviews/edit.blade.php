@@ -4,7 +4,7 @@
 
 <div class="container-xl px-4 mt-4" align="center">
           <div class="col-xl-8 text-left" >
-          <center><h2>Edit Interview</h2></center>
+          <center><h2>Update Interview</h2></center>
 
             <!-- Account details card-->
             <div class="card mb-4">
@@ -128,7 +128,7 @@ function isNumberKey(evt){
 <div class="vertical-space-60"></div>
 <div class="job-post-box">        
 @foreach ($interview as $interview)
-<form action="{{ route('interviews.update',$interview->id) }}" method="POST" onsubmit="return submitForm(this);">
+<form action="{{ route('interviews.update',$interview->id) }}" method="POST" onsubmit="return confirm('Are you sure want to submit?')">
         @csrf
         @method('PUT')
 
@@ -187,26 +187,5 @@ function isNumberKey(evt){
 
 @include('partial.footer')
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script>
-        function submitForm(form) {
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then(function (isOkay) {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-        return false;
-    }
-  
-      
-</script>  
 
 @endif

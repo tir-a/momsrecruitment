@@ -6,7 +6,8 @@
 @include('partial.sidebar')
 <head>
   @yield('css')
-</head>
+
+</head> 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
@@ -17,12 +18,6 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -89,9 +84,7 @@
 <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
 <script>
     $(document).ready(function() {
         $("#mySummernote1").summernote();
@@ -101,8 +94,7 @@
         $('.dropdown-toggle').dropdown();
     });
 </script>
-
-    @stack('scripts')
+@stack('scripts')
 </body>
 </html>
 

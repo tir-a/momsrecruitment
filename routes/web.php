@@ -48,6 +48,7 @@ Route::get('/showvacancy', 'GuestController@showvacancy')->name('showvacancy');
 
 Route::resource('users', 'UserController');
 Route::resource('branches', 'BranchController');
+Route::delete('/branches/{id}', 'BranchController@delete')->name('branches.destroy');
 Route::resource('recruiters', 'RecruiterController');
 Route::resource('applicants', 'ApplicantController');
 Route::resource('vacancies', 'VacancyController');
@@ -56,7 +57,7 @@ Route::resource('experiences', 'ExperienceController');
 Route::resource('applications', 'ApplicationController');
 Route::resource('interviews', 'InterviewController');
 Route::get('/applications/view/{id}', 'ApplicationController@view')->name('applications.view');
-Route::get('/vacancies/search', 'VacancyController@search')->name('vacancies.search');
+Route::get('/search', 'VacancyController@search');
 //Route::get('/sendSMS', 'NexmoSMSController@index');
 //Route::get('/send', 'ApplicationController@send')->name('applications.send');
 Route::get('/send', 'ApplicationController@send')->name('applications.send');

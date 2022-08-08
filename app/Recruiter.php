@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Recruiter extends Model
 {
@@ -14,5 +15,9 @@ class Recruiter extends Model
     public function childRecruiters()
     {
         return $this->hasMany(Recruiter::class, 'manager_id')->with('recruiters');
+    }
+
+    public function manager(){
+        return $this->belongsTo(Recruiter::class, 'manager_id');
     }
 }

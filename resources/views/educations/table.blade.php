@@ -54,20 +54,23 @@
 </div>
 @endforeach 
 
+<div class="float-left">
+  Showing
+    {{ $educations->firstItem() }}
+  to
+    {{ $educations->lastItem() }}
+  of
+    {{ $educations->total() }}
+  entries
+</div>
+
+<div class="float-right">
+{{ $educations->links() }}
+</div>
 
 <div class="vertical-space-20"></div>
 <div class="vertical-space-25"></div>
 <div class="job-list width-100">
-<ul class="pagination justify-content-end margin-auto">
-<li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_left</i></a></li>
-<li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-<li class="page-item">
-<a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_right</i></a>
-</li>
-</ul>
 </div>
 </div>
 </div>

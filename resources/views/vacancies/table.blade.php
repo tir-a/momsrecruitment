@@ -3,9 +3,6 @@
 @if(Auth::User()->role == 'recruiter')
 @extends('layouts.template')
 
-@section('css')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-@endsection
 @section('content')
 <head>
 <style>
@@ -34,34 +31,55 @@
 td {
   text-align: center;
 }
-
 </style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
 </head>
-<body>
-<div class="row">
+
+  <body>
+    <div class="row">
         <div class="col-lg-11 margin-tb">
-        <div align="center" style="font-family: Verdana">
+            <div align="center" style="font-family: Verdana">
                 <h2>List of Job Vacancies</h2>
             </div>
+            @if ($branch!=null)
             <span style="margin-left:1063px;">
                 <a class="btn btn-success" href="{{ route('vacancies.create') }}" > Add New Job Vacancy</a><br/>
             </span>
+            @else
+            <br>   
+            <div class="col-xl-5">
+             <div class="card mb-1">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p>Branch location: <span style="color: #ff0000; font-weight:bold;">Not choosen</span></p>
+                      <p>Please complete your <span style="font-weight:bold;">personal details</span> to add job vacancy</p>
+                    </div>
+                  </div>
+                </div>
+             </div>                 
+            </div>
+            @endif
         </div>
     </div>
-   <br>
+    <br>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
     <center>
-    <table class="table table-bordered"  id="vacancies">
+    <table class="table table-bordered"  id="vacancies"  class="display">
       <thead>
         <tr>
             <th class="text-center" style="font-family: Consolas">ID</th>
             <th class="text-center" style="font-family: Consolas">Position</th>
             <th class="text-center" style="font-family: Consolas">Status</th>
-            <th class="text-center" style="font-family: Consolas">Quantity</th>
+            <th class="text-center" style="font-family: Consolas">No of Availability</th>
             <th class="text-center" style="font-family: Consolas">Closing Date</th>
             <th class="text-center" style="font-family: Consolas" width="280px">Action</th>
         </tr>
@@ -75,7 +93,7 @@ td {
             <td>{{ $branch->quantity }}</td>
             <td>{{ $branch->date_close }}</td>
             <td>
-                <form action="{{ route('vacancies.destroy',$branch->id) }}" method="POST">
+                <form action="{{ route('vacancies.destroy',$branch->id) }}" method="POST" onsubmit="return confirm('Are you sure want to delete? This action cannot be revert.')">
    
                   <a class="btn btn-info" href="{{ route('vacancies.show',$branch->id) }}">View</a>
     
@@ -88,44 +106,24 @@ td {
                 </form>
             </td>
         </tr>
-      </tbody>
         @endforeach
+      </tbody>
     </table></center>
-    </body>
+  </body>
+
+  <script>
+        $(document).ready( function () {
+            $('#vacancies').DataTable();
+        });
+  </script>
+
     @include('sweetalert::alert')
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-    $('.delete').click(function(){
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to revert this action!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-                swal("Data has been deleted", {
-                icon: "success",
-                });
-            } else {
-                swal("Cancelled");
-            }
-            });
-    });
-    </script>
+   
 
 @endsection
-@push('scripts')
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#vacancies').DataTable();
-        });
-    </script>
-@endpush
+
 
 @elseif(Auth::User()->role == 'applicant')
 @include('partial.topbar')
@@ -143,14 +141,14 @@ td {
 
 <div id="search-box"  class="margin-none">
 <div class="container search-box">
-<form action="#" id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
+<form action="{{ url('/search') }}" method="get"  id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
 <div class="d-flex flex-row align-items-center justify-content-start inline-block">
 <span class="large material-icons search">search</span>
-<input class="search-box_search_input" placeholder="Search Keyword" required="required" type="search">
+<input class="search-box_search_input" placeholder="Search Job Vacancy" name="query" required="required" type="search">
 <span class="large material-icons search">place</span>
-<input class="search-box_search_input " placeholder="Location" required="required" type="search">
+<input class="search-box_search_input " placeholder="Location"  name="place" required="required" type="search">
 </div>
-<button type="submit" class="search-box_search_button">Search Jobs</button>
+<button type="submit" class="search-box_search_button">Search</button>
 </form>
 </div>
 </div>
@@ -187,21 +185,34 @@ td {
 </div>
 </div>
 </div>
-</div>
+</div> 
 @endif
 @endforeach 
+
+<div class="float-left">
+  Showing
+    {{ $vacancies->firstItem() }}
+  to
+    {{ $vacancies->lastItem() }}
+  of
+    {{ $vacancies->total() }}
+  entries
+</div>
+
+{{ $vacancies->links() }}
+
 
 <div class="vertical-space-20"></div>
 <div class="vertical-space-25"></div>
 <div class="job-list width-100">
 <ul class="pagination justify-content-end margin-auto">
-<li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_left</i></a></li>
-<li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+<li class="page-item"><a class="page-link pdding-none" href="{{ $vacancies->previousPageUrl() }}"><i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_left</i></a></li>
+<li class="page-item"><a class="page-link" href="{{ $vacancies->previousPageUrl() }}">1</a></li>
+<li class="page-item"><a class="page-link" href="{{ $vacancies->nextPageUrl() }}">2</a></li>
 <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
 <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
 <li class="page-item">
-<a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_right</i></a>
+<a class="page-link pdding-none" href="{{ $vacancies->nextPageUrl() }}"> <i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_right</i></a>
 </li>
 </ul>
 </div>
@@ -227,7 +238,7 @@ td {
 <div class="carousel-container">
 <div class="carousel-content">
 <h2 class="font-color-white">Find Your Perfect role</h2>
-</div>
+</div> 
 </div>
 </div>
 </section>
@@ -282,23 +293,18 @@ td {
 @endif
 @endforeach 
 
-<div class="vertical-space-20"></div>
-<div class="vertical-space-25"></div>
-<div class="job-list width-100">
-<ul class="pagination justify-content-end margin-auto">
-<li class="page-item"><a class="page-link pdding-none" href="javascript:void(0);"><i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_left</i></a></li>
-<li class="page-item"><a class="page-link active" href="javascript:void(0);">1</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-<li class="page-item">
-<a class="page-link pdding-none" href="javascript:void(0);"> <i class=" material-icons keyboard_arrow_left_right">keyboard_arrow_right</i></a>
-</li>
-</ul>
+<div class="float-left">
+  Showing
+    {{ $vacancies->firstItem() }}
+  to
+    {{ $vacancies->lastItem() }}
+  of
+    {{ $vacancies->total() }}
+  entries
 </div>
-</div>
-</div>
-</div>
+
+{{$vacancies->links()}}
+
 <div class="vertical-space-60"></div>
 </section>
 

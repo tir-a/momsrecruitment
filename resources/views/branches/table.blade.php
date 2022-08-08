@@ -1,7 +1,3 @@
-@section('css')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-@endsection
-
 @section('content')
 
 <head>
@@ -33,7 +29,9 @@ td {
 }
 </style>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -56,7 +54,7 @@ td {
         </div>
     @endif
    <center>
-    <table class="table table-bordered"  id="branches">
+    <table class="table table-bordered"  id="branches"  class="display">
       <thead>
         <tr>
             <th class="text-center" style="font-family: Consolas">Location</th>
@@ -68,7 +66,7 @@ td {
         <tr>
             <td>{{ $b->location }}</td>
             <td>
-                <form action="{{ route('branches.destroy',$b->id) }}" method="POST">
+                <form action="{{ route('branches.destroy',$b->id) }}" method="POST"  onsubmit="return confirm('Are you sure want to delete? This action cannot be revert.')">
    
                   <a class="btn btn-info" href="{{ route('branches.show',$b->id) }}">View</a>
                 
@@ -76,53 +74,51 @@ td {
 
                     @csrf
                     @method('DELETE')
-      
-                    <button type="submit"  class="btn btn-danger delete">Delete</button>
+ 
+                    <button class="btn btn-danger">Delete</button>
                 </form>
             </td>
         </tr>
-       </tbody>
         @endforeach
+       </tbody>
     </table>
     </center><br><br>
-    </body>
+    </body>    
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        $('.delete').click(function(){
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to revert this action!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                })
-                .then((willDelete) => {
-                if (willDelete) {
-                    swal("Data has been deleted", {
-                    icon: "success",
-                    });
-                } else {
-                    swal("Cancelled");
-                }
-                });
-        });
-    </script>
-
-
-@endsection
-
-@push('scripts')
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready(function() {
+        $(document).ready( function () {
             $('#branches').DataTable();
         });
     </script>
-@endpush
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+
+            $('.delete').click(function(e){
+               e.preventDefault();
+
+               var delete_id = $(this).attr('data-id');
+                //alert(delete_id);
+
+                swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to revert this action.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                    if (willDelete) {
+                        window.location = "/delete"+delete_id+""
+                        swal("Successfully deleted", {
+                        icon: "success",
+                        });
+                    }
+                    });
+            });
+        
+    </script>
+ 
+
+@endsection
+

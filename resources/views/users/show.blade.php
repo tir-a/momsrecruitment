@@ -33,43 +33,26 @@
                       <h6 class="mb-0">Branch</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                                {{ $branch->location }}
-                    </div>
+                    {{ $branch ? $branch->location : "" }}                 
+                     </div>
                   </div>
                   <hr>
-                  @foreach( $manager as $key => $mgr )
-                  @if ($mgr!=null)
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Manager</h6>
                       </div>
                       <div class="col-sm-9 text-secondary">
-                          @foreach( $manager as $key => $mgr )
-                                {{ $mgr->name }}
-                          @endforeach
-                        </div>                       
+                         {{ $manager ? $manager->name : "" }}
+                        </div>                  
                     </div>
                     </div>
                   </div>
-                  @else if ($mgr==null)
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Manager</h6>
-                      </div>
-                      <div class="col-sm-9 text-secondary">
-                                 None 
-                        </div>                       
-                    </div>
-                    </div>
-                  </div>
-                  @endif
-                  @endforeach
                   <br>
                   <div class="row">
                     <div class="col-6 d-flex justify-content-right text-right">
                      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
                      <a class="btn btn-warning" href="{{ route('users.edit',$user->id) }}">Edit</a>&nbsp;
-                     <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                     <form action="{{ route('users.destroy',$user->id) }}" method="POST" onsubmit="return confirm('Are you sure want to delete account? This action cannot be revert.')">
                        @csrf
                        @method ('DELETE')
                      <button type="submit" class="btn btn-danger" >Delete</button>
@@ -195,11 +178,18 @@
   <div class="col-6 d-flex justify-content-center text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
      <a class="btn btn-warning" href="{{ route('users.edit',$user->id) }}">Edit</a>&nbsp;
-      <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+     @if ($applications->isEmpty() and $educations->isEmpty() and $experiences->isEmpty())
+      <form action="{{ route('users.destroy',$user->id) }}" method="POST" onsubmit="return confirm('Are you sure want to delete account? This action cannot be revert.')">
            @csrf
            @method ('DELETE')
      <a> <button type="submit" class="btn btn-danger" >Delete</button></a>
         </form>
+    @else 
+        <form action="" onsubmit="return confirm('Account cannot be deleted as there is job application submitted or education or experience added. Please delete the job application first if possible and delete your education or experience if any.')">
+      
+     <a> <button type="submit" class="btn btn-danger" >Delete</button></a>
+        </form>
+    @endif
 </div>
 </div>
 </div>

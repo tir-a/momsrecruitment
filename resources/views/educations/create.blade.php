@@ -42,7 +42,7 @@
 <div class="vertical-space-10"></div>
 <div class="job-post-box">
     
-<form action="{{ route('educations.store') }}" method="POST" onsubmit="return submitForm(this);">
+<form action="{{ route('educations.store') }}" method="POST" onsubmit="return confirm('Are you sure want to submit?')">
     @csrf
 <div class="row">
 <div class="col-lg-6 col-md-6">
@@ -104,7 +104,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="grade">CGPA</label>
-<input type="number" min="0.00" max="4.00" step="0.01" class="form-control" id="grade" name="grade" placeholder="Ex: 3.90" required />
+<input type="text" class="form-control" id="grade" name="grade" placeholder="Ex: 8A 1B / 3.80 " required />
 </div>
 </div>
 </div>
@@ -146,24 +146,6 @@
 
 });
 </script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script>
-        function submitForm(form) {
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then(function (isOkay) {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-        return false;
-    }
-</script>  
 
 

@@ -248,35 +248,35 @@
 <div class="row">
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Position Applied" style="border:none" readonly />
+<label for="level">Applied Position</label><br><br>
 <input type="text" class="form-control" id="position" name="position" value="{{  $applications->position  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Location" style="border:none" readonly />
+<label for="level">Location</label><br><br>
 <input type="text" class="form-control" id="location" name="location" value="{{  $applications->location  }}" readonly />
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Date" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Applied Date</label><br><br>
 <input type="text" class="form-control" id="date_apply" name="date_apply" value="{{  $applications->date_apply  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Application Status" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Application Status</label><br><br>
 <input type="text" class="form-control" id="app_status" name="app_status" value="{{  $applications->app_status  }}" readonly />
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-10 col-md-8">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Resume" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Resume</label><br><br>
 &nbsp;&nbsp;<a href="{{ asset('/file/'.$applications->resume) }}" target="_blank"> {{  $applications->resume  }}</a>
 </div>
 </div>
@@ -287,7 +287,7 @@
   <div class="col-6 d-flex text-center">
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
      @if ($applications->app_status=="Pending")
-      <form action="{{ route('applications.destroy',$applications->id) }}" method="POST">
+      <form action="{{ route('applications.destroy',$applications->id) }}" method="POST"  onsubmit="return confirm('Are you sure want to delete? This action cannot be revert.')">
            @csrf
            @method ('DELETE')
      <a> <button type="submit" class="btn btn-danger" >Delete</button></a>

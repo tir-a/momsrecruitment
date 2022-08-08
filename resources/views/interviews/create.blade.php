@@ -32,7 +32,9 @@
                <select class="form-control" name="application_id" required>
                   <option value=""> Choose Application ID</option>
                    @foreach ($application as $application)
+                    @if (!empty($interview) && !in_array($application->id, $interview))
                      <option value="{{$application->id}}"> {{$application->id}}</option>
+                    @endif
                    @endforeach               
                 </select>
             </div>

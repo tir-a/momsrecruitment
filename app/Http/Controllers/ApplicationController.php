@@ -71,7 +71,8 @@ class ApplicationController extends Controller
 
         $education = DB::table('applicants')
         ->join('educations','educations.applicant_id', '=', 'applicants.id')
-        ->select('educations.id as id', 'applicants.id as id', 'applicants.gender as gender', 'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number' )
+        ->select('educations.id as id', 'applicants.id as id', 'applicants.gender as gender', 
+        'applicants.date_of_birth as date_of_birth' , 'applicants.address as address', 'applicants.phone_number as phone_number' )
         ->where('users.id', '=', Auth::User()->id)->get();
 
         return view('applications.create' , compact('vacancy'));
@@ -88,7 +89,6 @@ class ApplicationController extends Controller
         $request->validate([
             'resume'=>'required',
             'date_apply'=>'required',
-
         ]);
 
         if($request->hasFile('resume')){
@@ -129,7 +129,7 @@ class ApplicationController extends Controller
      */
     public function show($application)
     {  
-    if (Auth::User()->role == 'recruiter'){
+      if (Auth::User()->role == 'recruiter'){
       
         $applications = DB::table('vacancies')
         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
@@ -141,7 +141,6 @@ class ApplicationController extends Controller
                 'applications.resume as resume', 'users.name as name' , 'users.email as email', 'applications.date_apply as date_apply','branches.location as location', 'applicants.gender as gender',
                 'applicants.date_of_birth as date_of_birth', 'applicants.phone_number as phone_number', 'applicants.address as address')
         ->where('applications.id', '=', $application)->get();
-
 
         $applicants = DB::table('vacancies')
         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
@@ -167,11 +166,9 @@ class ApplicationController extends Controller
         ->where('applications.id', '=', $application)->get();
         
         return view('applications.show', compact('applications', 'applicants', 'experiences') );
-
        }
 
        else if (Auth::User()->role == 'applicant'){
-
 
         $applications = DB::table('vacancies')
         ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
@@ -182,9 +179,7 @@ class ApplicationController extends Controller
         ->where('applications.id', '=', $application)->get();
 
         return view('applications.show', compact('applications') );
-
        }
-
     }
 
     /**
@@ -245,10 +240,17 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        $application->delete();
+        try {
+            $application->delete();
 
-        return redirect()->route('applications.index')
-        ->with('toast_success','Application deleted successfully');
+            return redirect()->route('applications.index')
+              ->with('toast_success','Application deleted successfully');
+
+          } catch (\Illuminate\Database\QueryException $e) {
+          
+              return redirect()->route('applications.index')
+              ->with('toast_warning','Application cannot be deleted as there is an interview belongs to it');
+          }
     }
 
     public function view($id){
@@ -272,7 +274,6 @@ class ApplicationController extends Controller
         $vacancy = DB::table('vacancies')
         ->select('id')
         ->where('id', '=', $id)->get();
-  
 
         if ($education->isEmpty() || is_null($us->gender) || is_null($us->date_of_birth) ||  is_null($us->address) ||  is_null($us->phone_number))
 
@@ -281,6 +282,7 @@ class ApplicationController extends Controller
         else 
 
         return view('applications.create' , compact('vacancy'));
+
         
     }
 /*

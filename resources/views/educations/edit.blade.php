@@ -26,7 +26,7 @@
 
 <div class="vertical-space-60"></div>
 <div class="job-post-box">
-<form action="{{ route('educations.update',$education->id) }}" method="POST" onsubmit="return submitForm(this);">
+<form action="{{ route('educations.update',$education->id) }}" method="POST" onsubmit="return confirm('Are you sure want to submit?')">
         @csrf
         @method('PUT')
 <div class="row">
@@ -106,46 +106,6 @@
 
 @include('partial.footer')
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-    crossorigin="anonymous"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-    function submitForm(form) {
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then(function (isOkay) {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-        return false;
-    }
-    </script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script>
-        function submitForm(form) {
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then(function (isOkay) {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-        return false;
-    }
-  
-      
-</script>  
 

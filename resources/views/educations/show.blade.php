@@ -18,41 +18,41 @@
 <div class="row">
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Educational Level" style="border:none" readonly />
+<label for="level">Educational Level</label><br><br>
 <input type="text" class="form-control" id="level" name="level" value="{{  $education->level  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Qualification" style="border:none" readonly />
+<label for="level">Qualification</label><br><br>
 <input type="text" class="form-control" id="certificate" name="certificate" value="{{  $education->certificate  }}" readonly />
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Institution" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Institution</label><br><br>
 <input type="text" class="form-control" id="institution" name="institution" value="{{  $education->institution  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Area of Study" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Area of Study</label><br><br>
 <input type="text" class="form-control" id="field_study" name="field_study" value="{{  $education->field_study  }}" readonly />
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Graduation Date" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Graduation Date</label><br><br>
 <input type="text" class="form-control" id="" name="grad_date" value="{{  $education->grad_date  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Grade" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Grade</label><br><br>
 <input type="text" class="form-control" id="grade" name="grade" value="{{  $education->grade  }}" readonly />
 </div>
 </div>
@@ -62,7 +62,7 @@
      <a class="btn btn-info" href="javascript:history.back()"> Back</a>&nbsp;
      <a class="btn btn-warning" href="{{ route('educations.edit',$education->id) }}">Edit</a>&nbsp;
      @if ($applications->isEmpty())
-      <form action="{{ route('educations.destroy',$education->id) }}" method="POST">
+      <form action="{{ route('educations.destroy',$education->id) }}" method="POST" onsubmit="return confirm('Are you sure want to delete? This action cannot be revert.')">
            @csrf
            @method ('DELETE')
        <a> <button type="submit" class="btn btn-danger" >Delete</button></a>

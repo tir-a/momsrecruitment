@@ -76,33 +76,33 @@
 <div class="row">
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Position Applied" style="border:none" readonly />
+<label for="level">Applied Position</label><br><br>
 <input type="text" class="form-control" id="position" name="position" value="{{  $interviews->position  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Confirmation Status" style="border:none" readonly />
+<label for="level">Confirmation Status</label><br><br>
 <input type="text" class="form-control" id="confirmation" name="confirmation" value="{{  $interviews->confirmation  }}" readonly />
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Date" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Date</label><br><br>
 <input type="text" class="form-control" id="date" name="date" value="{{  $interviews->date  }}" readonly />
 </div>
 </div>
 <div class="col-lg-6 col-md-6">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Time" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Time</label><br><br>
 <input type="text" class="form-control" id="time" name="time" value="{{  $interviews->time  }}" readonly />
 </div>
 </div>
 <div class="col-lg-10 col-md-8">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Zoom Platform" style="border:none" readonly />
+<div class="form-group"><br>
+<label for="level">Zoom Platform</label><br><br>
 &nbsp;&nbsp;<a href="{{ $interviews->platform  }}" target="_blank"> {{ $interviews->platform   }}</a>
 </div>
 </div>

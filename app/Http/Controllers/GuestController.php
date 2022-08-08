@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Vacancy;
+use App\Application;
+use App\Http\Controllers\Controller;
 
 class GuestController extends Controller
 {
@@ -51,7 +53,8 @@ class GuestController extends Controller
         ->join('branches','branches.id', '=', 'recruiters.branch_id')
         ->select('vacancies.id as id',
         'vacancies.position as position','vacancies.status as status', 'vacancies.quantity as quantity', 
-        'vacancies.date_close as date_close', 'branches.location as location')->get();
+        'vacancies.date_close as date_close', 'branches.location as location')
+        ->paginate(4);
 
         return view('vacancies.index', compact('vacancies') );
     }
@@ -66,5 +69,31 @@ class GuestController extends Controller
         ->where('vacancies.id', '=', $vacancy->id)->get();
 
         return view('vacancies.show', compact('vacancy', 'branches') );
+    }
+
+    public function search(Request $request){
+        // Get the search value from the request
+        $search_text = $request->get('query');
+        $search = $request->get('place');
+
+        // Search in the title and body columns from the posts table
+
+            $vacancies = DB::table('vacancies')
+           ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+           ->join('branches','branches.id', '=', 'recruiters.branch_id')
+           ->where('position', 'LIKE', '%'.$search_text.'%')
+            ->select('vacancies.id as id',
+             'vacancies.position as position','vacancies.status as status', 'vacancies.quantity as quantity', 
+             'vacancies.date_close as date_close', 'branches.location as location')->get();
+             $vac = DB::table('vacancies')
+           ->join('recruiters','vacancies.recruiter_id', '=', 'recruiters.id')
+           ->join('branches','branches.id', '=', 'recruiters.branch_id')
+           ->where('location', 'LIKE', '%'.$search.'%')
+            ->select('vacancies.id as id',
+             'vacancies.position as position','vacancies.status as status', 'vacancies.quantity as quantity', 
+             'vacancies.date_close as date_close', 'branches.location as location')->get();
+    
+        // Return the search view with the resluts compacted
+        return view('vacancies.index', ['vacancies'=> $vacancies, 'vacancy'=> $vac]);
     }
 }

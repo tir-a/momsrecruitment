@@ -31,7 +31,7 @@
 
 <div class="vertical-space-60"></div>
 <div class="job-post-box">
-<form action="{{ route('experiences.store') }}" method="POST" onsubmit="return submitForm(this);">
+<form action="{{ route('experiences.store') }}" method="POST" onsubmit="return confirm('Are you sure want to submit?')">
     @csrf
 <div class="row">
 <div class="col-lg-6 col-md-6">
@@ -123,22 +123,5 @@ function isNumberKey(evt){
     return !(charCode > 31 && (charCode < 48 || charCode > 57));
 }
 </script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<script>
-        function submitForm(form) {
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then(function (isOkay) {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-        return false;
-    }
-</script>  
+

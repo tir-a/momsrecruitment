@@ -85,10 +85,14 @@
 
 <section id="job-Details">
 <div class="container background-color-full-white job-Details">
-<div class="Exclusive-Product">@foreach ($branches as $branch)
-
+<div class="Exclusive-Product">
+@foreach ($branches as $branch)
 <h3> {{ $branch->position }} </h3>
-<a href="{{ route('applications.view' , $branch->id) }}" class="Apply-Now">Apply Now</a>
+@if (!empty($applications))
+  @if (!in_array($branch->id, $applications))
+    <a href="{{ route('applications.view' , $branch->id) }}" class="Apply-Now">Apply Now</a>
+  @endif 
+@endif
 <h6 class="font-color-orange">Closing date: {{ $branch->date_close }} </h6>
 <a href="javascript:history.back()">Back</a>
 <i class="material-icons">place</i>

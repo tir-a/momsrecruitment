@@ -18,20 +18,19 @@
 </section>
 
 
-<div id="search-box">
+<div id="search-box"  class="margin-none">
 <div class="container search-box">
-<form action="#" id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
+<form action="{{ url('/search') }}" method="get"  id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
 <div class="d-flex flex-row align-items-center justify-content-start inline-block">
 <span class="large material-icons search">search</span>
-<input class="search-box_search_input" placeholder="Search Keyword" required="required" type="search">
+<input class="search-box_search_input" placeholder="Search Job Vacancy" name="query" required="required" type="search">
 <span class="large material-icons search">place</span>
-<input class="search-box_search_input " placeholder="Location" required="required" type="search">
+<input class="search-box_search_input " placeholder="Location"  name="place" required="required" type="search">
 </div>
-<button type="submit" class="search-box_search_button">Search Jobs</button>
+<button type="submit" class="search-box_search_button">Search</button>
 </form>
 </div>
 </div>
-
 
 <section id="Job-Category">
 <div class="container">
@@ -39,6 +38,7 @@
 <div class="vertical-space-30"></div>
 </div>
 </section>
+
 <section id="v2-Jobtend">
 <div class="container">
 <div class="vertical-space-100"></div>
@@ -107,16 +107,16 @@
 </div>
 </section>
 
-<div id="search-box">
+<div id="search-box"  class="margin-none">
 <div class="container search-box">
-<form action="#" id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
+<form action="{{ url('/search') }}" method="get"  id="search-box_search_form_3" class="search-box_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between ">
 <div class="d-flex flex-row align-items-center justify-content-start inline-block">
 <span class="large material-icons search">search</span>
-<input class="search-box_search_input" placeholder="Search Keyword" required="required" type="search">
+<input class="search-box_search_input" placeholder="Search Job Vacancy" name="query" required="required" type="search">
 <span class="large material-icons search">place</span>
-<input class="search-box_search_input " placeholder="Location" required="required" type="search">
+<input class="search-box_search_input " placeholder="Location"  name="place" required="required" type="search">
 </div>
-<button type="submit" class="search-box_search_button">Search Jobs</button>
+<button type="submit" class="search-box_search_button">Search</button>
 </form>
 </div>
 </div>

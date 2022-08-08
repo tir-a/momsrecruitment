@@ -27,7 +27,7 @@
 
 <div class="vertical-space-60"></div>
 <div class="job-post-box">
-<form action="{{ route('applications.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('applications.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Are you sure want to submit?')">
     @csrf
 <div class="row">
 <div class="col-lg-6 col-md-6">
@@ -42,7 +42,7 @@
 <div class="col-lg-6 col-md-6">
 <div class="form-group">
 <label for="qualification">Date Apply</label>
-<input type="date" class="form-control" id="date_apply" min="<?php echo date("Y-m-d"); ?>" name="date_apply" required />
+<input type="date" class="form-control" id="date_apply" min="<?php echo date("Y-m-d"); ?>" max="<?php echo date("Y-m-d"); ?>"name="date_apply" required />
 </div>
 </div>
 </div>

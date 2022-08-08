@@ -72,10 +72,6 @@
 
 @elseif(Auth::User()->role == 'recruiter')
 
-@section('css')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-@endsection
-
 @section('content')
 
 <style>
@@ -104,8 +100,11 @@
 td {
   text-align: center;
 }
-
 </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" defer></script>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+</head>
 
 <body>
 <div class="row">
@@ -122,7 +121,7 @@ td {
         </div>
     @endif
     <center>
-    <table class="table table-bordered"  id="applications">
+    <table class="table table-bordered"  id="applications" class="display">
       <thead>
         <tr>
             <th class="text-center"  style="font-family: Consolas">ID</th>
@@ -140,7 +139,7 @@ td {
             <td>{{ $apps->date_apply }}</td>
             <td>{{ $apps->app_status }}</td>
             <td>
-            <form action="{{ route('applications.destroy',$apps->id) }}" method="POST">
+            <form action="{{ route('applications.destroy',$apps->id) }}" method="POST" onsubmit="return confirm('Are you sure want to delete? This action cannot be revert.')">
    
                   <a class="btn btn-info" href="{{ route('applications.show',$apps->id) }}">View</a>
     
@@ -153,14 +152,19 @@ td {
                 </form>
             </td>
         </tr>
-       </tbody>
         @endforeach
+       </tbody>
     </table></center>
     </body>
+
+    <script>
+            $(document).ready( function () {
+            $('#applications').DataTable();
+         } );
+    </script>
+
     @include('sweetalert::alert')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-    crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
             $('.delete').click (function(){
@@ -202,13 +206,5 @@ td {
     </script>
 
 @endsection
-@push('scripts')
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#applications').DataTable();
-        });
-    </script>
-@endpush
+
 @endif

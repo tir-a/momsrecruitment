@@ -45,7 +45,7 @@
                                  <select class="form-control" name="branch_id" required>
                                      <option value="">-- Choose Branch --</option>
                                          @foreach ($branch as $branch)
-                                    <option value="{{$branch->id}}"> {{$branch->location}}</option>
+                                    <option value="{{$branch->id}}" {{ ( Auth::user()->recruiter->branch_id == $branch->id ) ? "selected" : "" }}> {{$branch->location}}</option>
                                          @endforeach
                                  </select>
                             </div>
@@ -54,7 +54,7 @@
                                 <select class="form-control" name="manager_id">
                                      <option value="">-- Choose Manager --</option>
                                          @foreach ($manager as $manager)
-                                     <option value="{{$manager->id}}"> {{$manager->name}} - {{$manager->location}}</option>
+                                     <option value="{{$manager->id}}" {{ ( Auth::user()->recruiter->manager_id == $manager->id ) ? "selected" : "" }}> {{$manager->name}} - {{$manager->location}}</option>
                                          @endforeach
                                 </select>
                             </div>
@@ -119,7 +119,7 @@
         </div>
     @endif
     
-<form action="{{ route('users.update',$user->id) }}" method="POST" onsubmit="return submitForm(this);">
+<form action="{{ route('users.update',$user->id) }}" method="POST" onsubmit="return confirm('Are you sure want to submit?')">
 @csrf
 @method('PUT')
 <div class="row">
@@ -146,19 +146,7 @@
 <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" required>
 </div>
 </div>
-</div>
-<div class="row">
-<div class=" col-lg-2 col-md-8">
-<div class="form-group">
-<input type="text" class="form-control" placeholder="Password" style="border:none">
-</div>
-</div>
-<div class=" col-lg-6 col-md-12">
-<div class="form-group">
-<input type="password" class="form-control" name="password" value="{{ Auth::user()->password }}">
-</div>
-</div>
-</div>          
+</div>        
 @foreach ($applicant as $applicant )
 <div class="row">
 <div class=" col-lg-2 col-md-8">
@@ -224,30 +212,5 @@
 
 <div class="vertical-space-100"></div>
 </section>
-
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script>
-        function submitForm(form) {
-        swal({
-            title: "Are you sure?",
-            text: "This form will be submitted",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then(function (isOkay) {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-        return false;
-    }
-  
-      
-</script>  
-
-
 
 @endif

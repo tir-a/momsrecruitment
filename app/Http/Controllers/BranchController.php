@@ -17,7 +17,6 @@ class BranchController extends Controller
     public function index()
     {
         $branches = Branch::all();
-        //dd('branches');
 
         return view('branches.index', compact('branches') );
     }
@@ -108,9 +107,17 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        $branch->delete();
+       // $branch=Branch::findOrFail($id);
+        try {
+            $branch->delete();
 
-        return redirect()->route('branches.index')
-        ->with('toast_success','Branch deleted successfully');
+            return redirect()->route('branches.index')
+              ->with('toast_success','Branch deleted successfully');
+
+          } catch (\Illuminate\Database\QueryException $e) {
+          
+              return redirect()->route('branches.index')
+              ->with('toast_warning','Branch cannot be deleted as there is recruiter belongs to it');
+          }
     }
 }

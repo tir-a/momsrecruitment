@@ -32,7 +32,6 @@ class InterviewController extends Controller
         'interviews.confirmation as confirmation',  'interviews.platform as platform', 'applications.id as app_id', 'vacancies.id as v_id')
         ->where('vacancies.recruiter_id', '=', $users)->get();
 
-        //dd('branches');
         return view('interviews.index', compact('interviews') );
         }
 
@@ -49,9 +48,7 @@ class InterviewController extends Controller
         'interviews.confirmation as confirmation', 'interviews.platform as platform', 'applications.id as app_id', 'vacancies.id as v_id')
         ->where('applicant_id', '=', $users)->get();
 
-        //dd('branches');
         return view('interviews.index', compact('interviews') );
-
       }
     }
     /**
@@ -60,10 +57,25 @@ class InterviewController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $application=DB::select('select * from applications');
+    { 
+        if (Auth::User()->role == 'recruiter'){
+
+        $users = DB::table('users')
+            ->join('recruiters','recruiters.user_id', '=', 'users.id')
+            ->select('recruiters.id as id')
+            ->where('user_id', '=', Auth::User()->id)->first()->id;
+
+        $application = DB::table('vacancies')
+            ->join('applications','applications.vacancy_id', '=', 'vacancies.id')
+            ->select('vacancies.position as position', 'applications.app_status as app_status', 
+                    'applications.date_apply as date_apply', 'applications.id as id')
+            ->where('vacancies.recruiter_id', '=', $users)->get();    
+            
+        $interview = Interview::pluck('application_id')->toArray();
+            //dd($interview);
+        }
         
-        return view('interviews.create', compact('application'));
+        return view('interviews.create', compact('application', 'interview'));
     }
 
     /**
@@ -81,6 +93,7 @@ class InterviewController extends Controller
 
         ]);
 
+       
                 DB::table('interviews')->insert([
                     'date' => $request->date,
                     'time'=> $request->time,
@@ -139,7 +152,7 @@ class InterviewController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($interview)
-    {   //dd(Interview::get()); // $interview = Interview::findOrFail($id);
+    {   
         if (Auth::User()->role == 'recruiter'){
 
         $interview = DB::table('interviews')
@@ -164,8 +177,6 @@ class InterviewController extends Controller
             ->where('interviews.id', '=', $interview)->get();
           }
 
-          // dd($interview);
-            
             return view('interviews.edit', compact('interview'));
     }
 
@@ -186,7 +197,6 @@ class InterviewController extends Controller
             'date'=>'required',
             'time'=>'required',
             'platform'=>'required',
-
         ]);
 
        DB::table('interviews')
@@ -194,7 +204,6 @@ class InterviewController extends Controller
             'date' => $request->date,
             'time' => $request->time,
             'platform'=>$request->platform,
-
         ]);
 
     }
@@ -204,14 +213,12 @@ class InterviewController extends Controller
 
         $request->validate([
             'confirmation'=>'required',
-        
         ]);
+
         DB::table('interviews')
         ->where('id',$interview->id)->update([
             'confirmation' => $request->confirmation,
-
         ]);
-
     }
         return redirect()->route('interviews.index')
         ->with('toast_success','Interview updated successfully.');
